@@ -1,0 +1,425 @@
+/* Put your CSS here */
+body {
+	overflow-y: scroll;
+}
+
+body.index {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: url(../img/background.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#main-content {
+	width: 78%;
+	margin-right: 2%;
+	margin-left: 20%;
+/*	background: #f5f5f5;*/
+	margin-top: 100px;
+}
+
+.index #main-content {
+	position: absolute;
+}
+
+#main-content.fade-content {
+	opacity: 0.2;
+}
+
+
+#main-title {	
+	color: #B5FFFC;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	font-size: 36px;
+	line-height: 45px;
+	margin-top: 110px;
+	margin-left: 40px;
+	max-width: 480px;
+	background: rgba(0,0,0,0.2);
+	text-shadow: 0 1px 5px rgba(0,0,0,0.9);
+}
+
+#zavod-logo {
+	position: absolute;
+	bottom: 40px;
+	left: 2%;
+	background: rgba(255,255,255,0.8);
+	padding: 10px;
+	width: 120px;
+	opacity: 0.5;
+}
+
+.index #zavod-logo {
+	opacity: 0.8;
+}
+
+
+
+#zavod-logo:hover {
+	opacity: 1;
+}
+
+
+/*
+---------------------------------------------
+	Navigation
+---------------------------------------------
+*/
+
+#main-nav {
+	height: 60px;
+	width: 96%;
+	margin: 0 2%;
+	background: #fff;
+	background: rgba(255,255,255,0.8);
+	position: fixed;
+	top: 0;
+	left: 0;
+	box-shadow: 0 1px 0 0 rgba(0,0,0,0.1);
+}
+
+#logo-wrapper {
+	width: 12%;
+	height: 50px;
+	position: relative;
+	float: left;
+}
+
+#main-logo {
+	position: absolute;
+	right: 0;
+	padding: 14px 0;
+}
+
+#logo-text {
+	font-size: 11px;
+	width: 150px;
+	position: absolute;
+	right: -170px;
+	display: none;
+	color: #666;
+	padding-top: 20px;
+}
+
+#logo-wrapper:hover #logo-text {
+	display: block;
+}
+
+#lang-select,
+#main-nav-links {
+	float: right;
+}
+
+#lang-select p {
+	border-left: 1px solid #ddd;
+	padding: 10px 20px 10px;
+	margin: 12px 0 0 20px;
+	color: #555;
+}
+
+#lang-select p:hover {
+	color: #222;
+	cursor: pointer;
+}
+
+#main-nav-links li {
+	display: inline-block;
+	list-style: none;
+}
+
+#main-nav-links li a {
+	text-decoration: none;
+	font-weight: bold;
+	padding: 7px 30px;
+	color: #444;
+	display: block;
+}
+
+#main-nav-links li a:visited {
+	color: #444;
+}
+
+#main-nav-links li a:hover,
+#main-nav-links li a.active {
+	color: #222;
+}
+
+
+
+/* Extended Navigation
+-----------------------------------*/
+
+#extended-nav {
+	position: fixed;
+	top: 61px;
+	width: 13%;
+	height: 300px;
+	margin-left: 2%;
+	background: #fff;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 1px 0 0 0 rgba(0,0,0,0.1);
+	z-index: 1000;
+}
+
+.index #extended-nav {
+	top: 200px;
+	height: 145px;
+}
+
+#search-input {
+	position: absolute;
+	top: 0px;
+	right: -363px;
+	width: 330px;
+	border: none;
+	background: #fff;
+	box-shadow: 0 1px 0 0 rgba(0,0,0,0.1);
+	font-size: 30px;
+	padding: 20px 16px;
+	display: none;
+	outline: none;
+}
+
+#search-input.visible-search {
+	display: block;
+}
+
+#category-nav {
+	width: 292px;
+	height: auto;
+	position: absolute;
+	top: 60px;
+	right: -363px;
+	background: #fff;
+	padding: 20px 35px;
+	display: none;
+	box-shadow: 0 -1px 0 0 rgba(0,0,0,0.1);
+}
+
+#category-nav.visible-categories {
+	display: block;
+}
+
+#category-nav a {
+	text-decoration: none;
+	color: #555;
+	font-size: 18px;	
+	padding: 10px 7px;
+	display: block;
+}
+
+#category-nav a:hover,
+#category-nav a.active {
+	color: #222;
+}
+
+#category-nav li {
+	color: transparent;	
+}
+
+#category-nav li:hover {
+	color: #444;
+}
+
+
+
+/*
+---------------------------------------------
+	Category Template
+---------------------------------------------
+*/
+
+.category #main-content h1 {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	font-size: 24px;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
+	color: #333;
+}
+
+.category #main-content ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.category #main-content ul a {
+	text-decoration: none;
+	color: #222;
+	padding: 10px;
+	display: block;
+}
+
+
+/*
+---------------------------------------------
+	Buttons
+---------------------------------------------
+*/
+
+#search-btn,
+#menu-btn {
+	width: 50px;
+	height: 50px;
+	color: #bcbec0;
+	font-size: 50px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 15px;
+	padding-right: 20px;
+}
+
+.index #search-btn,
+.index #menu-btn {
+	color: #444;
+}
+
+#menu-btn {
+	top: 70px;
+}
+
+#search-btn:hover,
+#menu-btn:hover {
+	color: #222;
+	cursor: pointer;
+}
+
+
+
+/*
+---------------------------------------------
+	Icons
+---------------------------------------------
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext);
+
+
+
+/*
+---------------------------------------------
+	Icons
+---------------------------------------------
+*/
+
+@font-face {
+	font-family: 'dasuv_icons';
+	src:url('../fonts/dasuv_icons.eot?k6n33r');
+	src:url('../fonts/dasuv_icons.eot?#iefixk6n33r') format('embedded-opentype'),
+		url('../fonts/dasuv_icons.woff?k6n33r') format('woff'),
+		url('../fonts/dasuv_icons.ttf?k6n33r') format('truetype'),
+		url('../fonts/dasuv_icons.svg?k6n33r#dasuv_icons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'dasuv_icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-plus:before {
+	content: "\e600";
+}
+.icon-menu:before {
+	content: "\e601";
+}
+.icon-magnifyer:before {
+	content: "\e602";
+}
+.icon-magnifyer_close:before {
+	content: "\e603";	
+}
+.icon-ex:before {
+	content: "\e604";
+}
+.icon-category:before {
+	content: "\e605";
+}
+.icon-arr-up:before {
+	content: "\e606";
+}
+.icon-arr-right:before {
+	content: "\e607";
+}
+.icon-arr-left:before {
+	content: "\e608";
+}
+.icon-arr-down:before {
+	content: "\e609";
+}
+
+
+
+
+
+/*
+---------------------------------------------
+	Helper classes
+---------------------------------------------
+*/
+
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  *zoom: 1;
+}
+
+
+/*
+---------------------------------------------
+	Media Queries
+---------------------------------------------
+*/
+
+@media only screen and (min-width: 1280px) {
+
+#main-content {
+	width: 71%;
+	margin-left: 27%;
+	margin-right: 2%;
+}
+
+#extended-nav {
+	top: 61px;
+	width: 21%;
+	height: 300px;
+	margin-left: 2%;
+}
+
+#main-nav {
+	height: 60px;
+	width: 96%;
+	margin: 0 2%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+}
+

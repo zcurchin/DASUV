@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DASUV</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+  <!--
+    
+  Application Template
+  ============================================   
+  -->
+  <script type="text/x-handlebars">
+    <nav id="main-nav" class="clearfix">
+      <div id="logo-wrapper">
+        {{#link-to 'index'}}
+          <img id="main-logo" src="img/dasuv_logo.png"/>
+        {{/link-to}}
+        <div id="logo-text">{{i18n dasuv_long}}</div>
+      </div>
+
+      <div id="lang-select">
+        <p {{action "changeLanguage" on="click"}}>{{languageStr}}</p>
+      </div>
+                 
+      <ul id="main-nav-links">      
+        <li>
+          {{#link-to 'category' category.id}}{{i18n artists}}{{/link-to}}
+        </li>
+        <li>
+          {{#link-to 'category' category.id}}{{i18n texts}}{{/link-to}}
+        </li>
+      </ul>
+    </nav>
+
+    <div id="extended-nav" class="clearfix">
+
+      {{view 'SearchBoxView'}}
+      
+      <div id="search-btn" class="icon-magnifyer" {{action "showHideSearch" on="click"}}></div>
+      <div id="menu-btn" class="icon-category" {{action "showHideCategories" on="click"}}></div>
+
+      <ul id="category-nav" {{ bind-attr class=visibleCategories}}>      
+        {{#each category in model}}
+          <li {{action "hideCategories" on="click"}}>
+          {{#link-to 'category' category.id}}{{category.label}}{{/link-to}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>    
+
+    <div id="main-content" {{bind-attr class=fadeContent}}>{{outlet}}</div>
+  </script>
+
+
+  <!--
+    
+  Search Box View
+  ============================================
+  -->
+  <script type="text/x-handlebars" data-template-name="search-box">  
+    {{input autofocus="autofocus" id="search-input" type="text" value=searchValue placeholder=searchPlaceholder class=visibleSearch}}
+  </script>
+
+
+
+  <!--
+    
+  Index ( homepage ) Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="index">
+    <h1 id="main-title">{{i18n dasuv_long}}</h1>
+  </script>
+
+
+
+  <!--
+  
+  Category Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="category">
+    <h1>{{model.category_name}}</h1>
+    <ul>      
+      {{#each artist in model.artists}}
+        <li>
+        {{#link-to 'artist' artist.id}}
+          {{artist.name}}
+        {{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+  </script>
+
+
+
+
+  <!--
+  
+  Artist Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="artist">
+
+  </script>
+
+
+
+  <!--
+    
+  Search Box View
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="texts">
+
+  </script>
+
+  <a href="http://www.kultura-vojvodina.org.rs/" target="blank">
+    <img id="zavod-logo" src="img/zavod-logo.png"/>
+  </a>
+
+  <!-- 
+  ============================================
+  -->
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.7.0.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/i18n.js"></script>
+  <script src="js/translations.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
