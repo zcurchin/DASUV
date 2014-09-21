@@ -1,5 +1,7 @@
 <?php
 
+  include('init.php');
+
   if(isset($_GET['method']) && !empty($_GET['method'])) {
     if(function_exists($_GET['method'])) {
       $_GET['method']();
