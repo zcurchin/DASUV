@@ -76,6 +76,8 @@
       
     }
 
+    /* vratiti po četiri od svakog: artists, artworks, texts */
+
     $content = array(
       'category_name' => 'Likovna umetnost',
       'artists' => array(

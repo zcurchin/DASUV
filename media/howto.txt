@@ -1,0 +1,47 @@
+
+***************************************
+*  DASUV / media storage / howto 1.0  *
+***************************************
+
+
+Standardi 
+*********
+
+	+ avatar za svakog umetnika je jpeg 200x200 px
+	+ thumbnail za svako delo je jpeg 250x250 px
+	+ img za delo je jpeg, koji u punoj rezoluciji iznosi 1200 px po dužoj stranici
+	+ format video materijala je:
+	+ format teksta je html ili pdf, ukoliko html nije moguć
+
+
+Folder struktura
+*****************
+
+
+	+ media folder sadrzi podfoldere od kojih svaki nosi ime kao ID koji je ujedno i ID dela u bazi
+
+	+ Ako delo ima samo jedan img, onda folder sadrzi 
+		-- thumb.jpg
+		-- 1.jpg
+
+	+ Ako delo ima npr. tri img, onda folder sadrzi:
+		-- thumb.jpg
+		-- t1.jpg
+		-- t2.jpg
+		-- t3.jpg
+		-- 1.jpg
+		-- 2.jpg
+		-- 3.jpg
+
+	+ Ako delo ima jedan video snimak, onda folder sadrži:
+		-- thumb.jpg
+		-- 1.mp4
+
+	+ [avatars] folderi sadrže avatare umetnika, svaki jpeg iznosi 250x250 px i imenovani su prema ID umetnika iz baze, primer:
+		-- 1.jpg
+		-- 2.jpg
+		-- 3.jpg
+		itd.
+
+
+
