@@ -1,53 +1,40 @@
 <?php
 
-  include('init.php');
+  /***************************/
+  /* DASUV           api.php */
+  /***************************/
 
+  /* Check for method */
   if(isset($_GET['method']) && !empty($_GET['method'])) {
+       
     if(function_exists($_GET['method'])) {
-      $_GET['method']();
+        $_GET['method']();
+      }
+    } else {
+      echo 'Method needs to be specified';
     }
-  } else {
-    echo 'Method needs to be specified';
-  }
 
+  /* Get categories from db */
   function getCategories(){
+      require('init.php'); 
+      $query = $db -> prepare("SELECT * FROM categories");
+      $query -> execute(); 
+      $rezultat = $query -> fetchAll();
 
-    $categories = array(
-      array(
-        'id' => 1,
-        'label' => 'Vizuelna umetnost'
-      ),
-      array(
-        'id' => 2,
-        'label' => 'Književnost'
-      ),
-      array(
-        'id' => 3,
-        'label' => 'Muzika'
-      ),
-      array(
-        'id' => 4,
-        'label' => 'Izvođačke umetnosti'
-      ),
-      array(
-        'id' => 5,
-        'label' => 'Arhitektura i dizajn'
-      ),
-      array(
-        'id' => 6,
-        'label' => 'Film i video'
-      ),
-    );
-
-    $categories = json_encode($categories);
-
-    echo $categories;
+      foreach($rezultat as $r){
+        $categories[] = array(
+          'id' => intval($r['id']),
+          'label' => $r['cat_title_'.$_GET['lang']]
+        );
+      }   
+    echo json_encode($categories); /* return */
   }
 
+  /* Get artist from db */
   function getArtist(){
-
     echo '{artist:"Balint"}';
   }
+
 
   function getSearchResults(){
     $results = array(
