@@ -87,20 +87,22 @@
   -->
   <script type="text/x-handlebars" id="category">
     <h1>{{model.category_name}}</h1>
+    
     <ul>      
       {{#each artist in model.artists}}
         <li>
         {{#link-to 'artist' artist.id}}
+          <img {{bind-attr src=artist.avatar_url}}>
           {{artist.name}}
         {{/link-to}}
         </li>
       {{/each}}
     </ul>
+
     <ul>      
       {{#each artwork in model.artworks}}
         <li>
-        {{#link-to 'artwork' artwork.id}}
-          <img src=""/>
+        {{#link-to 'artwork' artwork.id}}          
           {{artwork.title}}
         {{/link-to}}
         </li>
