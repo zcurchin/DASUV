@@ -50,7 +50,8 @@
           'category_id' => intval($r['category_id']),
           'name' => $r['name_'.$lang],
           'website' => $r['website'],
-          'biography' => $r['bio_'.$lang]
+          'biography' => $r['bio_'.$lang],
+          'path' => 'avatars/'.$r['id'].'.jpg'
         );
       }
       $artist_full['artist'] = $artist;
@@ -64,7 +65,8 @@
           'id' => intval($r['id']),
           'title' => $r['title_'.$lang],
           'year' => intval($r['year']),
-          'media_type' => $r['media_type']
+          'media_type' => $r['media_type'],
+          'path' => 'media/'.$r['id'].'/thumb.jpg'
         );
       }
       $artist_full['artworks'] = $artworks;
@@ -128,7 +130,7 @@
         foreach($rezultat as $r){
           $dela[] = array(
             'id' => intval($r['id']),
-            'title' => $r['title_'.$_GET['lang']],
+            'title' => $r['title_'.$_GET['lang']],  
             'path' => 'media/'.$r['id'].'/thumb.jpg'
           );
         }
