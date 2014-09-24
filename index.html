@@ -96,6 +96,16 @@
         </li>
       {{/each}}
     </ul>
+    <ul>      
+      {{#each artwork in model.artworks}}
+        <li>
+        {{#link-to 'artwork' artwork.id}}
+          <img src=""/>
+          {{artwork.title}}
+        {{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
   </script>
 
 

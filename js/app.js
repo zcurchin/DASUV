@@ -18,6 +18,7 @@ if(readCookie('lang') === 'en'){
 App.Router.map(function() {
   this.route("category", { path: "/category/:category_id" });
   this.route("artist", { path: "/artist/:artist_id" });
+  this.route("artwork", { path: "/artist/:artist_id" });
 });
 
 // this will add class to body accorind to 
@@ -62,6 +63,18 @@ App.CategoryRoute = Ember.Route.extend({
       'method': 'getCategory',
       'lang': I18n.locale,
       'category_id': params.category_id
+    }).then(function(data) {      
+      return data;
+    });
+  }
+});
+
+App.ArtworkRoute = Ember.Route.extend({
+  model: function(params) {
+    return $.getJSON('services/api.php', {
+      'method': 'getArtwork',
+      'lang': I18n.locale,
+      'artwork_id': params.artwork_id
     }).then(function(data) {      
       return data;
     });
