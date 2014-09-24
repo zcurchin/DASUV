@@ -36,6 +36,10 @@
     $artist_id = $_GET['artist_id'];
 
     if(isset($artist_id) && !empty($artist_id)) {
+
+      $lang = $_GET['lang'];
+
+      /* artist info */
       require('init.php'); 
       $query = $db -> prepare("SELECT * FROM artists WHERE id=".$artist_id);
       $query -> execute(); $rezultat = $query -> fetchAll();
@@ -44,17 +48,33 @@
         $artist[] = array(
           'id' => intval($r['id']),
           'category_id' => intval($r['category_id']),
-          'name' => $r['name_'.$_GET['lang']],
+          'name' => $r['name_'.$lang],
           'website' => $r['website'],
-          'biography' => $r['bio_'.$_GET['lang']]
+          'biography' => $r['bio_'.$lang]
         );
       }
+      $artist_full['artist'] = $artist;
+
+      /* get artworks for artist */
+      $query = $db -> prepare("SELECT * FROM artworks WHERE artist_id=".$artist_id);
+      $query -> execute(); $rezultat = $query -> fetchAll();
+
+      foreach($rezultat as $r){
+        $artworks[] = array(
+          'id' => intval($r['id']),
+          'title' => $r['title_'.$lang],
+          'year' => intval($r['year']),
+          'media_type' => $r['media_type']
+        );
+      }
+      $artist_full['artworks'] = $artworks;
+
     }
     else{
       echo 'No category id specified.';
     }
     /* -> return */
-    echo json_encode($artist);
+    echo json_encode($artist_full);
   }
 
 
@@ -96,7 +116,8 @@
         foreach($rezultat as $r){
           $umetnici[] = array(
             'id' => intval($r['id']),
-            'name' => $r['name_'.$_GET['lang']]
+            'name' => $r['name_'.$_GET['lang']],
+            'path' => 'avatars/'.$r['id'].'.jpg'
           );
         }
         $categories['artists'] = $umetnici;
@@ -108,6 +129,7 @@
           $dela[] = array(
             'id' => intval($r['id']),
             'title' => $r['title_'.$_GET['lang']]
+            'path' => 'media/'.$r['id'].'/thumb.jpg'
           );
         }
         $categories['artworks'] = $dela;
