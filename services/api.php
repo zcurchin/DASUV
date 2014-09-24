@@ -26,12 +26,14 @@
           'id' => intval($r['id']),
           'label' => $r['cat_title_'.$_GET['lang']]
         );
-      }   
-    echo json_encode($categories); /* return */
+      }
+    /* -> return */
+    echo json_encode($categories);
   }
 
   /* Get artist from db */
   function getArtist(){
+    /* -> return */
     echo '{artist:"Balint"}';
   }
 
@@ -49,51 +51,52 @@
         'author'  => 'Some Other',
       ),
     );
-
-    $results = json_encode($results);
-
-    echo $results;
+    
+    /* -> return */
+    echo json_encode($results);
   }
 
+  /* Get artist, artworks & texts from category id */  
   function getCategory(){
 
     $category_id = $_GET['category_id'];
     
     if(isset($category_id) && !empty($category_id)) {
-      
+
+      require('init.php');
+
+      /* resolve this nigga out soon */
+      $categories['category_name'] = 'Naziv kategorije';  
+
+        /* get artists */
+        $query = $db -> prepare("SELECT * FROM artists WHERE category_id=".$category_id." LIMIT 4");
+        $query -> execute(); $rezultat = $query -> fetchAll();
+        foreach($rezultat as $r){
+          $umetnici[] = array(
+            'id' => intval($r['id']),
+            'name' => $r['name_'.$_GET['lang']]
+          );
+        }
+        $categories['artists'] = $umetnici;
+
+        /* get artworks */
+        $query = $db -> prepare("SELECT * FROM artworks WHERE category_id=".$category_id." LIMIT 4");
+        $query -> execute(); $rezultat = $query -> fetchAll();
+        foreach($rezultat as $r){
+          $dela[] = array(
+            'id' => intval($r['id']),
+            'title' => $r['title_'.$_GET['lang']]
+          );
+        }
+        $categories['artworks'] = $dela;
+
+    /* -> return */
+    echo json_encode($categories);
+
+    
+    }else{
+      echo 'No category id specified.';
     }
-
-    /* vratiti po četiri od svakog: artists, artworks, texts */
-
-    $content = array(
-      'category_name' => 'Likovna umetnost',
-      'artists' => array(
-        array(
-          'id'        => 1,
-          'name' => 'Balint Sombati',
-        ),
-        array(
-          'id'        => 2,
-          'name' => 'Viktor Vazareli',
-        ),
-        array(
-          'id'        => 3,
-          'name' => 'Hundertwasser Friedensreich',
-        ),
-        array(
-          'id'        => 4,
-          'name' => 'Ištvan Balind',
-        ),        
-      ),
-      'artworks' => array(
-      ),
-      'texts' => array(
-      ),
-    );
-
-    $content = json_encode($content);
-
-    echo $content;
   }
 
 ?>
