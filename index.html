@@ -92,7 +92,7 @@
       {{#each artist in model.artists}}
         <li>
         {{#link-to 'artist' artist.id}}
-          <img {{bind-attr src=artist.avatar_url}}>
+          <img {{bind-attr src=artist.path}}>
           {{artist.name}}
         {{/link-to}}
         </li>
