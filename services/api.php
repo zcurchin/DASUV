@@ -116,7 +116,8 @@
         foreach($rezultat as $r){
           $umetnici[] = array(
             'id' => intval($r['id']),
-            'name' => $r['name_'.$_GET['lang']]
+            'name' => $r['name_'.$_GET['lang']],
+            'path' => 'avatars/'.$r['id'].'.jpg'
           );
         }
         $categories['artists'] = $umetnici;
@@ -128,6 +129,7 @@
           $dela[] = array(
             'id' => intval($r['id']),
             'title' => $r['title_'.$_GET['lang']]
+            'path' => 'media/'.$r['id'].'/thumb.jpg'
           );
         }
         $categories['artworks'] = $dela;
