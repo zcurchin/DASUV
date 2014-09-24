@@ -18,8 +18,7 @@
   function getCategories(){
       require('init.php'); 
       $query = $db -> prepare("SELECT * FROM categories");
-      $query -> execute(); 
-      $rezultat = $query -> fetchAll();
+      $query -> execute(); $rezultat = $query -> fetchAll();
 
       foreach($rezultat as $r){
         $categories[] = array(
@@ -33,8 +32,29 @@
 
   /* Get artist from db */
   function getArtist(){
+    
+    $artist_id = $_GET['artist_id'];
+
+    if(isset($artist_id) && !empty($artist_id)) {
+      require('init.php'); 
+      $query = $db -> prepare("SELECT * FROM artists WHERE id=".$artist_id);
+      $query -> execute(); $rezultat = $query -> fetchAll();
+
+      foreach($rezultat as $r){
+        $artist[] = array(
+          'id' => intval($r['id']),
+          'category_id' => intval($r['category_id']),
+          'name' => $r['name_'.$_GET['lang']],
+          'website' => $r['website'],
+          'biography' => $r['bio_'.$_GET['lang']]
+        );
+      }
+    }
+    else{
+      echo 'No category id specified.';
+    }
     /* -> return */
-    echo '{artist:"Balint"}';
+    echo json_encode($artist);
   }
 
 
@@ -65,8 +85,10 @@
 
       require('init.php');
 
-      /* resolve this nigga out soon */
-      $categories['category_name'] = 'Naziv kategorije';  
+        /* get category title */
+        $query = $db -> prepare("SELECT * FROM categories WHERE id=".$category_id);
+        $query -> execute(); $rezultat = $query -> fetchAll();
+        $categories['category_name'] = $rezultat[0]['cat_title_'.$_GET['lang']];
 
         /* get artists */
         $query = $db -> prepare("SELECT * FROM artists WHERE category_id=".$category_id." LIMIT 4");
