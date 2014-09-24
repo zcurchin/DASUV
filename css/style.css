@@ -33,16 +33,14 @@ body.index {
 
 
 #main-title {	
-	color: #B5FFFC;
+	color: #111;
 	font-family: 'Open Sans', sans-serif;
-	font-weight: 300;
-	font-size: 36px;
+	font-weight: 400;
+	font-size: 42px;
 	line-height: 45px;
 	margin-top: 110px;
 	margin-left: 40px;
 	max-width: 480px;
-	background: rgba(0,0,0,0.2);
-	text-shadow: 0 1px 5px rgba(0,0,0,0.9);
 }
 
 #zavod-logo {
