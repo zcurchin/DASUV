@@ -128,7 +128,7 @@
         foreach($rezultat as $r){
           $dela[] = array(
             'id' => intval($r['id']),
-            'title' => $r['title_'.$_GET['lang']]
+            'title' => $r['title_'.$_GET['lang']],
             'path' => 'media/'.$r['id'].'/thumb.jpg'
           );
         }
