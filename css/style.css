@@ -233,6 +233,10 @@ body.index {
 ---------------------------------------------
 */
 
+.category #main-content {
+	padding-bottom: 70px;
+}
+
 .category #main-content h1 {
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-weight: 400;
@@ -244,8 +248,13 @@ body.index {
 
 .category #main-content ul {
 	list-style: none;
-	margin: 0;
+	margin: 40px 0 0;
 	padding: 0;
+}
+
+.category #main-content ul li {
+	display: inline-block;
+	float: left;
 }
 
 .category #main-content ul a {
@@ -253,6 +262,21 @@ body.index {
 	color: #222;
 	padding: 10px;
 	display: block;
+}
+
+.category #main-content ul p {
+	text-align: center;
+}
+
+.category #main-content ul img {
+	border-radius: 300px;
+	overflow: hidden;
+	width: 200px;
+	height: 200px;
+}
+
+.category #main-content ul img.artwork_thumb {
+	border-radius: 0px;
 }
 
 
