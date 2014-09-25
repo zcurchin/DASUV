@@ -87,11 +87,24 @@
   -->
   <script type="text/x-handlebars" id="category">
     <h1>{{model.category_name}}</h1>
-    <ul>      
+    
+    <ul class="clearfix">      
       {{#each artist in model.artists}}
         <li>
         {{#link-to 'artist' artist.id}}
-          {{artist.name}}
+          <img {{bind-attr src=artist.path}}>
+          <p>{{artist.name}}</p>
+        {{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
+
+    <ul class="clearfix">      
+      {{#each artwork in model.artworks}}
+        <li>
+        {{#link-to 'artwork' artwork.id}}
+          <img class="artwork_thumb" {{bind-attr src=artwork.path}}>          
+          <p>{{artwork.title}}</p>
         {{/link-to}}
         </li>
       {{/each}}
@@ -107,6 +120,11 @@
   ============================================
   -->
   <script type="text/x-handlebars" id="artist">
+
+    <img class="artwork_thumb" {{bind-attr src=artist.path}}>          
+    <p>{{artist.name}}</p>
+    <p>{{artist.category_name}}</p>
+    <p>{{artist.website}}</p>
 
   </script>
 
