@@ -41,20 +41,20 @@
 
       /* artist info */
       require('init.php'); 
-      $query = $db -> prepare("SELECT * FROM artists WHERE id=".$artist_id);
+      $query = $db -> prepare("SELECT * FROM artists INNER JOIN categories ON artists.category_id=categories.id AND artists.id=".$artist_id);
       $query -> execute(); $rezultat = $query -> fetchAll();
 
       foreach($rezultat as $r){
-        $artist[] = array(
+        $artist_full['artist'] = array(
           'id' => intval($r['id']),
           'category_id' => intval($r['category_id']),
+          'category_name' => $r['cat_title_'.$lang],
           'name' => $r['name_'.$lang],
           'website' => $r['website'],
           'biography' => $r['bio_'.$lang],
           'path' => 'avatars/'.$r['id'].'.jpg'
         );
       }
-      $artist_full['artist'] = $artist;
 
       /* get artworks for artist */
       $query = $db -> prepare("SELECT * FROM artworks WHERE artist_id=".$artist_id);
