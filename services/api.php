@@ -41,7 +41,7 @@
 
       /* artist info */
       require('init.php'); 
-      $query = $db -> prepare("SELECT * FROM artists INNER JOIN categories ON artists.category_id=categories.id AND artists.id=".$artist_id);
+      $query = $db -> prepare("SELECT * FROM artists INNER JOIN categories ON artists.category_id=categories.id AND artists.artist_id=".$artist_id);
       $query -> execute(); $rezultat = $query -> fetchAll();
 
       foreach($rezultat as $r){
@@ -119,7 +119,7 @@
           $umetnici[] = array(
             'id' => intval($r['artist_id']),
             'name' => $r['name_'.$_GET['lang']],
-            'path' => 'avatars/'.$r['id'].'.jpg'
+            'path' => 'avatars/'.$r['artist_id'].'.jpg'
           );
         }
         $categories['artists'] = $umetnici;
