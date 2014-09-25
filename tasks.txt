@@ -1,0 +1,62 @@
+SERVISI
+
+- getText($text_id)
+[vraća 'title' i 'body' za text_id ]
+
+- getTexts()
+[vraća 'id' i 'title' za sve tekstove iz baze, gde je general=true ]
+[ovo je za autorske tekstove na front page		   									 ]
+
+- getArtists($cat_id, $fromNum)
+[ako ima cat_id vrati umetnike za kategoriju   ]
+[u suprotnom za svaku kategoriju po 4 umetnika ] 
+
+		/* Scenario: All artists */
+		/* getArtists() */
+		[
+			{	
+				'category_name': 'Vizuelna umetnost',
+				'category_id': '1',
+				'total': '12',
+				'artists':[
+						{
+							'artist_id': 1,
+							'name': 'John Doe',
+							'path': 'avatars/1.jpg'
+						},
+						{
+							'artist_id': 2,
+							'name': 'Jane Doe',
+							'path': 'avatars/2.jpg'
+						}
+					]
+			}
+		]
+
+		/* Scenario: Additional artists  					  */
+		/* getArtists($cat_id, $fromNum)  				  */
+		/* $fromNum označava broj umetnika u DOM-u  */
+		[
+			{
+				'artist_id': 5,
+				'name': 'John Doe',
+				'path': 'avatars/1.jpg'
+			},
+			{
+				'artist_id': 6,
+				'name': 'Jane Doe',
+				'path': 'avatars/2.jpg'
+			}
+		]
+
+
+- getArtwork($artwork_id)
+[vraća sve parametre za traženo delo ]
+
+
+- getArtworks($category_id, $fromNum)
+
+
+
+
+
