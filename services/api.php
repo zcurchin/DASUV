@@ -46,7 +46,7 @@
 
       foreach($rezultat as $r){
         $artist_full['artist'] = array(
-          'id' => intval($r['id']),
+          'id' => intval($r['artist_id']),
           'category_id' => intval($r['category_id']),
           'category_name' => $r['cat_title_'.$lang],
           'name' => $r['name_'.$lang],
@@ -117,7 +117,7 @@
         $query -> execute(); $rezultat = $query -> fetchAll();
         foreach($rezultat as $r){
           $umetnici[] = array(
-            'id' => intval($r['id']),
+            'id' => intval($r['artist_id']),
             'name' => $r['name_'.$_GET['lang']],
             'path' => 'avatars/'.$r['id'].'.jpg'
           );
