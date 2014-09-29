@@ -14,7 +14,7 @@
 			echo 'Method needs to be specified';
 		}
 
-	/* Get categories from db */
+	/* getCategories() --- Get categories from db */
 	function getCategories(){
 			require('init.php'); 
 			$query = $db -> prepare("SELECT * FROM categories");
@@ -29,8 +29,9 @@
 		/* -> return */
 		echo json_encode($categories);
 	}
+	/* getCategories() --- end */
 
-	/* Get artist from db */
+	/* getArtist() --- Get artist from db */
 	function getArtist(){
 		
 		$artist_id = $_GET['artist_id'];
@@ -78,6 +79,7 @@
 		/* -> return */
 		echo json_encode($artist_full);
 	}
+	/* getArtist() --- end */
 
 
 	function getSearchResults(){
@@ -98,7 +100,7 @@
 		echo json_encode($results);
 	}
 
-	/* Get artist, artworks & texts from category id */  
+	/* getCategory() --- Get artist, artworks & texts from category id */  
 	function getCategory(){
 
 		$category_id = $_GET['category_id'];
@@ -142,9 +144,10 @@
 		}else{
 			echo 'No category_id is specified.';
 	}
+	/* getCategory() --- end */
 
 
-	/* Get single text from text_id */
+	/* getText() --- Get single text from text_id */
 	function getText(){
 	
 		$text_id = $_GET['text_id'];
@@ -170,14 +173,33 @@
  				echo 'No text_id specified.';
  			}
  	}
-
- 	/* MORE FUNCTIONS! */
-
+ 	/* getText() --- end */
 
 
+	/* getTexts() --- Get all texts */
+	function getTexts(){
+
+		$lang = $_GET['lang'];	
+		$query = $db -> prepare("SELECT * FROM texts");
+		$query -> execute(); $rezultat = $query -> fetchAll();
+
+		foreach($rezultat as $r){
+			$texts[] = array(
+				'id' => intval($r['text_id']),
+				'author' => $r['author_'.$lang],
+				'title' => $r['title_'.$lang]
+			);
+		}
+		/* -> return */
+		echo json_encode($texts);
+ 	}
+ 	/* getTexts() --- end */
 
 
-	
+
+
+	 	/* SOON -- MORE SHIT HERE -- SOON :) */
+
 
 	}
 	/* end. */
