@@ -1,13 +1,6 @@
 
 SERVISI
 
-- getTexts()
-[vraća 'id' i 'title' za sve tekstove iz baze, gde je general=true ]
-[ovo je za autorske tekstove na front page                         ]
-
-- getText($text_id)
-[vraća 'title' i 'body' za text_id ]
-
 - getArtists($cat_id, $fromNum)
 [ako ima cat_id vrati umetnike za kategoriju   ]
 [u suprotnom za svaku kategoriju po 4 umetnika ] 
