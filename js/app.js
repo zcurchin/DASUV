@@ -20,6 +20,7 @@ App.Router.map(function() {
   this.route("artist", { path: "/artist/:artist_id" });
   this.route("artwork", { path: "/artwork/:artwork_id" });
   this.route("texts", { path: "/texts" });
+  this.route("text", { path: "/text/:text_id" });
 });
 
 // this will add class to body accorind to 
@@ -106,11 +107,11 @@ App.TextsRoute = Ember.Route.extend({
 });
 
 App.TextRoute = Ember.Route.extend({
-  model: function() {
+  model: function(params) {
     return $.getJSON('services/api.php', {
-      'method': 'getText',
+      'method': 'getOneText',
       'lang': I18n.locale,
-      'id': 1 
+      'text_id': params.text_id 
     }).then(function(data) {      
       return data;
     });

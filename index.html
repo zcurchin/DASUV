@@ -161,7 +161,33 @@
   ============================================
   -->
   <script type="text/x-handlebars" id="texts">
-    <h1>{{model}}</h1>
+    <ul class="texts-list">
+    {{#each text in model}}
+      <li>
+      {{#link-to 'text' text.id}}     
+        <h1>{{text.title}}</h1>
+        <p>{{text.author}}</p>
+      {{/link-to}}
+      </li>
+    {{/each}}
+    </ul>
+  </script>
+
+
+
+  <!--
+    
+  Text Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="text">
+    {{#each text in model}}
+      <h1 class="text-title">{{text.title}}</h1>
+      <p class="text-author">{{text.author}}</p>
+      <div class="text-body">
+        {{{text.body}}}
+      </div>
+    {{/each}}
   </script>
 
 
