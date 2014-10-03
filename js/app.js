@@ -19,6 +19,7 @@ App.Router.map(function() {
   this.route("category", { path: "/category/:category_id" });
   this.route("artist", { path: "/artist/:artist_id" });
   this.route("artwork", { path: "/artwork/:artwork_id" });
+  this.route("texts", { path: "/texts" });
 });
 
 // this will add class to body accorind to 
@@ -171,6 +172,27 @@ App.ApplicationController = Ember.Controller.extend({
     hideCategories: function(){
       this.toggleProperty('visibleCategories');
       this.set('fadeContent', false);
+    }
+  }
+});
+
+App.ArtistController = Ember.Controller.extend({
+  visibleBio: false,
+  visibleBib: false,
+  actions: {
+    toggleBio: function(){
+      this.toggleProperty('visibleBio');      
+
+      if(this.get('visibleBib')){
+        this.toggleProperty('visibleBib');
+      }
+    },
+    toggleBib: function(){
+      this.toggleProperty('visibleBib');      
+
+      if(this.get('visibleBio')){
+        this.toggleProperty('visibleBio');
+      };
     }
   }
 });
