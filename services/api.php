@@ -7,25 +7,26 @@
 	/* Check for method */
 	if(isset($_GET['method']) && !empty($_GET['method'])) {
 			 
-		if(function_exists($_GET['method'])) {
-				$_GET['method']();
-			}
-		} else {
+		if(function_exists($_GET['method'])){
+			$_GET['method']();
+		}
+		else{
 			echo 'Method needs to be specified';
 		}
-
+	}
 	/* getCategories() --- Get categories from db */
 	function getCategories(){
-			require('init.php'); 
-			$query = $db -> prepare("SELECT * FROM categories");
-			$query -> execute(); $rezultat = $query -> fetchAll();
+		
+		require('init.php'); 
+		$query = $db -> prepare("SELECT * FROM categories");
+		$query -> execute(); $rezultat = $query -> fetchAll();
 
-			foreach($rezultat as $r){
-				$categories[] = array(
-					'id' => intval($r['id']),
-					'label' => $r['cat_title_'.$_GET['lang']]
-				);
-			}
+		foreach($rezultat as $r){
+			$categories[] = array(
+				'id' => intval($r['id']),
+				'label' => $r['cat_title_'.$_GET['lang']]
+			);
+		}
 		/* -> return */
 		echo json_encode($categories);
 	}
@@ -94,8 +95,7 @@
 				'title' => 'Some other text',
 				'author'  => 'Some Other',
 			),
-		);
-		
+		);	
 		/* -> return */
 		echo json_encode($results);
 	}
@@ -138,18 +138,20 @@
 				}
 				$categories['artworks'] = $dela;
 
-			/* -> return */
-			echo json_encode($categories);
-	
-		}else{
+		}
+		else{
 			echo 'No category_id is specified.';
+		}	
+	/* -> return */
+	echo json_encode($categories);
 	}
 	/* getCategory() --- end */
 
 
-	/* getText() --- Get single text from text_id */
-	function getText(){
+	/* getOneText() --- Get single text from text_id */
+	function getOneText(){
 	
+		require('init.php');
 		$text_id = $_GET['text_id'];
 		$lang = $_GET['lang'];
 
@@ -166,19 +168,20 @@
 					'body' => $r['body_'.$lang]
 				);
 			}
-			/* -> return */
-			echo json_encode($text);
-
- 			}else{
- 				echo 'No text_id specified.';
- 			}
+ 		}
+ 		else{
+ 			echo 'No text_id specified.';
+ 		}
+ 		/* -> return */
+		echo json_encode($text);
  	}
- 	/* getText() --- end */
+ 	/* getOneText() --- end */
 
 
 	/* getTexts() --- Get all texts */
 	function getTexts(){
 
+		require('init.php');
 		$lang = $_GET['lang'];	
 		$query = $db -> prepare("SELECT * FROM texts");
 		$query -> execute(); $rezultat = $query -> fetchAll();
@@ -197,10 +200,7 @@
 
 
 
+	/* SOON -- MORE SHIT HERE -- SOON :) */
 
-	 	/* SOON -- MORE SHIT HERE -- SOON :) */
-
-
-	}
-	/* end. */
-?>
+	
+/* end. */?>

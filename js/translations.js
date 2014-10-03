@@ -5,7 +5,10 @@ I18n.translations.sr = {
   texts: 'Textovi',
   projects: 'Projekat',
   search_holder: 'Unesite reč za pretragu',
-  dasuv_long: 'Digitalni arhiv savremene umetnosti Vojvodine'
+  dasuv_long: 'Digitalni arhiv savremene umetnosti Vojvodine',
+  website: 'Internet stranica',
+  biography: 'Biografija',
+  bibliography: 'Bibliografija'
 
 };
 
@@ -16,5 +19,9 @@ I18n.translations.en = {
   texts: 'Texts',
   project: 'Project',
   search_holder: 'Type query to search for',
-  dasuv_long: 'Digitalni arhiv savremene umetnosti Vojvodine'
+  dasuv_long: 'Digitalni arhiv savremene umetnosti Vojvodine',
+  website: 'Website',
+  biography: 'Biography',
+  bibliography: 'Bibliography'
+
 };

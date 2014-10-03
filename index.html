@@ -33,7 +33,7 @@
           {{#link-to 'category' category.id}}{{i18n artists}}{{/link-to}}
         </li>
         <li>
-          {{#link-to 'category' category.id}}{{i18n texts}}{{/link-to}}
+          {{#link-to 'texts'}}{{i18n texts}}{{/link-to}}
         </li>
       </ul>
     </nav>
@@ -87,8 +87,9 @@
   -->
   <script type="text/x-handlebars" id="category">
     <h1>{{model.category_name}}</h1>
-    
-    <ul class="clearfix">      
+    <h2 class="label">{{i18n artists}}</h2>
+    <ul class="artists-list clearfix">
+      <span class="icon-plus"></span>      
       {{#each artist in model.artists}}
         <li>
         {{#link-to 'artist' artist.id}}
@@ -99,7 +100,9 @@
       {{/each}}
     </ul>
 
-    <ul class="clearfix">      
+    <h2 class="label">{{i18n artworks}}</h2>
+    <ul class="clearfix">
+      <span class="icon-plus"></span>      
       {{#each artwork in model.artworks}}
         <li>
         {{#link-to 'artwork' artwork.id}}
@@ -120,32 +123,80 @@
   ============================================
   -->
   <script type="text/x-handlebars" id="artist">
-
-    <img class="artwork_thumb" {{bind-attr src=artist.path}}>          
-    <p>{{artist.name}}</p>
-    <p>{{artist.category_name}}</p>
-    <p>{{artist.website}}</p>
-
+    <div class="artist-box clearfix">
+    <img class="avatar" {{bind-attr src=model.artist.path}}>          
+      <div class="artist-info">  
+        <p class="artist-name">{{model.artist.name}}</p>
+        {{#link-to 'category' model.artist.category_id class="artist-cat-link"}}        
+          <span>{{model.artist.category_name}}</span>
+          <span class="arrow">&rarr;</span>
+        {{/link-to}}
+        <a class="link" {{bind-attr href=model.artist.website}} target="blank">{{i18n website}}</a>
+        <p class="sep"></p>
+        <p class="extra-info" {{action 'toggleBio'}}>{{i18n biography}}<span class="icon-plus"></span></p>
+        <p class="extra-info" {{action 'toggleBib'}}>{{i18n bibliography}}<span class="icon-plus"></span></p>        
+      </div>
+    </div>
+    <p class="biography" {{ bind-attr class=visibleBio}}>{{model.artist.biography}}</p>
+    <p class="bibliography" {{ bind-attr class=visibleBib}}>{{model.artist.biography}}</p>
+    <h2 class="label">{{i18n artworks}}</h2>
+    <ul class="clearfix">      
+      {{#each artwork in model.artworks}}
+        <li>
+        {{#link-to 'artwork' artwork.id}}
+          <img class="artwork_thumb" {{bind-attr src=artwork.path}}>          
+          <p>{{artwork.title}}</p>
+          <p>{{artwork.year}}</p>
+        {{/link-to}}
+        </li>
+      {{/each}}
+    </ul>
   </script>
 
 
 
   <!--
     
-  Search Box View
+  Texts Template
   ============================================
   -->
   <script type="text/x-handlebars" id="texts">
-
+    <ul class="texts-list">
+    {{#each text in model}}
+      <li>
+      {{#link-to 'text' text.id}}     
+        <h1>{{text.title}}</h1>
+        <p>{{text.author}}</p>
+      {{/link-to}}
+      </li>
+    {{/each}}
+    </ul>
   </script>
+
+
+
+  <!--
+    
+  Text Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="text">
+    {{#each text in model}}
+      <h1 class="text-title">{{text.title}}</h1>
+      <p class="text-author">{{text.author}}</p>
+      <div class="text-body">
+        {{{text.body}}}
+      </div>
+    {{/each}}
+  </script>
+
+
+
 
   <a href="http://www.kultura-vojvodina.org.rs/" target="blank">
     <img id="zavod-logo" src="img/zavod-logo.png"/>
   </a>
 
-  <!-- 
-  ============================================
-  -->
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
