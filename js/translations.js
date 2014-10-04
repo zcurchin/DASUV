@@ -17,7 +17,7 @@ I18n.translations.en = {
   artists: 'Artists',
   artworks: 'Artworks',
   texts: 'Texts',
-  project: 'About project',
+  project: 'About the project',
   search_holder: 'Type your search query',
   dasuv_long: 'Digital archive of contemporary arts of Vojvodina',
   website: 'Website',

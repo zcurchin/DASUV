@@ -6,12 +6,24 @@
 
 	error_reporting(0);
 
+	/* Konfiguracija, ukoliko je baza u lokalu */
+	/*
+	$config['db'] = array(
+		'host' => 'localhost',
+		'user' => 'root',
+		'pass' => 'root',
+		'dbname' => 'DASUV'
+	);
+	*/
+
+	
 	$config['db'] = array(
 		'host' => 'dasuv.db.10233176.hostedresource.com',
 		'user' => 'dasuv',
 		'pass' => 'Zavod666!',
 		'dbname' => 'dasuv'
 	);
+	
 
 	$db = new PDO(
 		'mysql:host='.$config['db']['host'].

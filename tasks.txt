@@ -44,49 +44,6 @@ SERVISI
 				]
 
 
-- getSearchResults($query)
-[najviše 2 od artists, 2 artwork i 2 texts / ukupno 6 itema ]
-
-		[
-			{
-				'artists': [
-					{
-						'id': 1,
-						'name': 'John Doe'	
-					},
-					{
-						'id': 2,
-						'name': 'Jane Doe'	
-					}
-				]
-			},
-			{
-				'artwork': [
-					{
-						'id': 1,
-						'name': 'Title1'
-					},
-					{
-						'id': 2,
-						'name': 'Title2'
-					}
-				]
-			},
-			{
-				'texts': [
-					{
-						'id': 1,
-						'name': 'Title1'	
-					},
-					{
-						'id': 2,
-						'name': 'Title2'	
-					}
-				]
-			}
-		]
-
-
 - getArtwork($artwork_id)
 [vraća sve parametre za traženo delo ]
 
