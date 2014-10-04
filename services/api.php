@@ -83,22 +83,81 @@
 	/* getArtist() --- end */
 
 
+	/* getSearchResults() --- Get artists, artworks & texts for given keyword */
 	function getSearchResults(){
-		$results = array(
-			array(
-				'id'        => 1,
-				'title' => 'Some text ',
-				'author'  => 'Some Author',
-			),
-			array(
-				'id'        => 2,
-				'title' => 'Some other text',
-				'author'  => 'Some Other',
-			),
-		);	
+		
+		require 'init.php';
+		$lang = $_GET['lang'];
+		$keyword = $_GET['keyword'];
+
+		if(isset($keyword) && !empty($keyword)) {
+
+			/* Get two Artists for given keyword */
+			$query = $db -> prepare("SELECT * FROM artists WHERE 
+				name_sr LIKE '%".$keyword."%'
+				OR name_en LIKE '%".$keyword."%'
+				LIMIT 2");
+			$query -> execute(); $rezultat = $query -> fetchAll();
+
+			foreach($rezultat as $r){
+				$art_get[] = array(
+					'id' => intval($r['artist_id']),
+					'name' => $r['name_'.$lang]
+				);
+			}		
+			$result['artists'] = $art_get;
+
+
+			/* Get two Artworks for given keyword, but exclude texts */
+			$query = $db -> prepare("SELECT * FROM artworks INNER JOIN artists ON artworks.artist_id=artists.artist_id WHERE 
+				media_type != 'text' AND
+				(title_sr LIKE '%".$keyword."%' 
+				OR title_en LIKE '%".$keyword."%' 
+				OR year LIKE '%".$keyword."%' 
+				OR publisher LIKE '%".$keyword."%')
+				LIMIT 2");
+			$query -> execute(); $rezultat = $query -> fetchAll();
+
+			foreach($rezultat as $r){
+				$artw_get[] = array(
+					'id' => intval($r['id']),
+					'author' => $r['name_'.$lang],
+					'title' => $r['title_'.$lang]
+				);
+			}		
+			$result['artworks'] = $artw_get;
+
+
+			/* Get two Texts for given keyword */
+			$query = $db -> prepare("SELECT * FROM artworks INNER JOIN artists ON artworks.artist_id=artists.artist_id WHERE 
+				media_type = 'text' AND
+				(title_sr LIKE '%".$keyword."%' 
+				OR title_en LIKE '%".$keyword."%' 
+				OR year LIKE '%".$keyword."%' 
+				OR publisher LIKE '%".$keyword."%')
+				LIMIT 2");
+			$query -> execute(); $rezultat = $query -> fetchAll();
+
+			foreach($rezultat as $r){
+				$artt_get[] = array(
+					'id' => intval($r['id']),
+					'author' => $r['name_'.$lang],
+					'title' => $r['title_'.$lang]
+				);
+			}		
+			$result['texts'] = $artt_get;
+
+		}
+		else{
+			echo 'No keyword specified.';
+		}	
+
 		/* -> return */
-		echo json_encode($results);
+		echo json_encode($result);
+
 	}
+	/* getSearchResults() --- end */
+
 
 	/* getCategory() --- Get artist, artworks & texts from category id */  
 	function getCategory(){
