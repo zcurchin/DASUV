@@ -9,6 +9,8 @@ if(readCookie('lang') === 'en'){
   langString ='Srpski';
 }
 
+bgIndex = 1;
+
 
 
 // --------------------------------------------------------
@@ -21,6 +23,7 @@ App.Router.map(function() {
   this.route("artwork", { path: "/artwork/:artwork_id" });
   this.route("texts", { path: "/texts" });
   this.route("text", { path: "/text/:text_id" });
+  this.route("about", { path: "/about" });
 });
 
 // this will add class to body accorind to 
@@ -33,9 +36,19 @@ Ember.Route.reopen({
     if (cssClass != 'application') {
       Ember.$('body').addClass(cssClass);
     }
+
+    if (cssClass === 'index'){
+      if (bgIndex === 4) bgIndex = 1;
+      
+      Ember.$('body').addClass('bg-'+bgIndex);
+      bgIndex++;
+    }
   },
   deactivate: function() {
     Ember.$('body').removeClass(this.toCssClass());
+    
+    var bgi = bgIndex-1;
+    Ember.$('body').removeClass('bg-'+bgi);
   },
   toCssClass: function() {
     return this.routeName.replace(/\./g, '-').dasherize();
@@ -116,7 +129,8 @@ App.TextRoute = Ember.Route.extend({
       return data;
     });
   }
-}); 
+});
+
 
 
 

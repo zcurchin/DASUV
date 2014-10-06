@@ -35,6 +35,9 @@
         <li>
           {{#link-to 'texts'}}{{i18n texts}}{{/link-to}}
         </li>
+        <li>
+          {{#link-to 'about'}}{{i18n about_title}}{{/link-to}}
+        </li>
       </ul>
     </nav>
 
@@ -75,7 +78,7 @@
   ============================================
   -->
   <script type="text/x-handlebars" id="index">
-    <h1 id="main-title">{{i18n dasuv_long}}</h1>
+
   </script>
 
 
@@ -188,6 +191,48 @@
         {{{text.body}}}
       </div>
     {{/each}}
+  </script>
+
+
+
+  <!--
+    
+  About Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="about">
+    <div>
+      <h1 class="text-title">{{i18n about_title}}</h1>
+      <p>{{i18n about_body_1}}</p>
+      <p>{{i18n about_body_2}}</p>
+      <p>{{i18n about_body_3}}</p>
+      <br><br>
+      <p class="meta">
+      {{i18n about_meta_1}}: <span class="name">Vera Kopicl</span><br> 
+      {{i18n about_meta_2}}: <span class="name">Luka Kulić</span><br>
+      {{i18n about_meta_3}}: <span class="name">Aleksandra Đurić Bosnić</span><br>
+      </p>
+
+      <p>{{i18n about_meta_4}}:</p>
+
+      <p class="meta">
+      <span class="name"> Svetislav Jovanov</span>, {{i18n about_meta_5}}<br>
+      <span class="name">Vladimir Crnjanski</span>, {{i18n about_meta_6}}<br>
+      <span class="name">Dragana Beleslijin</span>, {{i18n about_meta_7}}<br>
+      <span class="name">Svetozar Nešić</span>, {{i18n about_meta_8}}<br>
+      <span class="name">Nebojša Milenković</span>, {{i18n about_meta_9}}<br>
+      <span class="name">Vladimir Mitrović</span>, {{i18n about_meta_10}}<br>
+      </p>
+
+      <p>{{i18n about_meta_11}}:</p>
+
+      <p class="meta">
+      <span class="name">Luka Kulić</span>, {{i18n about_meta_12}}<br>
+      <span class="name">Zoran Ćurčin</span>, {{i18n about_meta_13}}<br>
+      <span class="name">Marko Rakić</span>, {{i18n about_meta_14}}<br>
+      <span class="name">Marko Ercegović</span>, {{i18n about_meta_15}}<br>
+      <p>
+    </div>
   </script>
 
 
