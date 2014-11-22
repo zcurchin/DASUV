@@ -3,12 +3,12 @@ SERVISI
 
 - getArtists($cat_id, $fromNum)
 [ako ima cat_id vrati umetnike za kategoriju   ]
-[u suprotnom za svaku kategoriju po 4 umetnika ] 
+[u suprotnom za svaku kategoriju po 4 umetnika ]
 
 				/* Scenario: All artists  */
 				/* getArtists() 					*/
 				[
-					{   
+					{
 						'category_name': 'Vizuelna umetnost',
 						'category_id': '1',
 						'total': '12',
@@ -45,7 +45,9 @@ SERVISI
 
 
 - getArtwork($artwork_id)
-[vraća sve parametre za traženo delo ]
+[ vraća SVE parametre za traženo delo ]
 
 
-- getArtworks($category_id, $fromNum)
+
+
+- getArtworks($cat_id, $fromNum)
