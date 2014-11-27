@@ -6,7 +6,7 @@
 
 	/* Check for method */
 	if(isset($_GET['method']) && !empty($_GET['method'])) {
-			 
+
 		if(function_exists($_GET['method'])){
 			$_GET['method']();
 		}
@@ -16,8 +16,8 @@
 	}
 	/* getCategories() --- Get categories from db */
 	function getCategories(){
-		
-		require('init.php'); 
+
+		require('init.php');
 		$query = $db -> prepare("SELECT * FROM categories");
 		$query -> execute(); $rezultat = $query -> fetchAll();
 
@@ -34,7 +34,7 @@
 
 	/* getArtist() --- Get artist from db */
 	function getArtist(){
-		
+
 		$artist_id = $_GET['artist_id'];
 
 		if(isset($artist_id) && !empty($artist_id)) {
@@ -42,7 +42,7 @@
 			$lang = $_GET['lang'];
 
 			/* artist info */
-			require('init.php'); 
+			require('init.php');
 			$query = $db -> prepare("SELECT * FROM artists INNER JOIN categories ON artists.category_id=categories.id AND artists.artist_id=".$artist_id);
 			$query -> execute(); $rezultat = $query -> fetchAll();
 
@@ -64,11 +64,11 @@
 
 			foreach($rezultat as $r){
 				$artworks[] = array(
-					'id' => intval($r['id']),
+					'id' => intval($r['artwork_id']),
 					'title' => $r['title_'.$lang],
 					'year' => intval($r['year']),
 					'media_type' => $r['media_type'],
-					'path' => 'media/'.$r['id'].'/thumb.jpg'
+					'path' => 'media/'.$r['artwork_id'].'/thumb.jpg'
 				);
 			}
 			$artist_full['artworks'] = $artworks;
@@ -85,7 +85,7 @@
 
 	/* getSearchResults() --- Get artists, artworks & texts for given keyword */
 	function getSearchResults(){
-		
+
 		require 'init.php';
 		$lang = $_GET['lang'];
 		$keyword = $_GET['keyword'];
@@ -93,7 +93,7 @@
 		if(isset($keyword) && !empty($keyword)) {
 
 			/* Get two Artists for given keyword */
-			$query = $db -> prepare("SELECT * FROM artists WHERE 
+			$query = $db -> prepare("SELECT * FROM artists WHERE
 				name_sr LIKE '%".$keyword."%'
 				OR name_en LIKE '%".$keyword."%'
 				LIMIT 2");
@@ -104,53 +104,53 @@
 					'id' => intval($r['artist_id']),
 					'name' => $r['name_'.$lang]
 				);
-			}		
+			}
 			$result['artists'] = $art_get;
 
 
 			/* Get two Artworks for given keyword, but exclude texts */
-			$query = $db -> prepare("SELECT * FROM artworks INNER JOIN artists ON artworks.artist_id=artists.artist_id WHERE 
+			$query = $db -> prepare("SELECT * FROM artworks INNER JOIN artists ON artworks.artist_id=artists.artist_id WHERE
 				media_type != 'text' AND
-				(title_sr LIKE '%".$keyword."%' 
-				OR title_en LIKE '%".$keyword."%' 
-				OR year LIKE '%".$keyword."%' 
+				(title_sr LIKE '%".$keyword."%'
+				OR title_en LIKE '%".$keyword."%'
+				OR year LIKE '%".$keyword."%'
 				OR publisher LIKE '%".$keyword."%')
 				LIMIT 2");
 			$query -> execute(); $rezultat = $query -> fetchAll();
 
 			foreach($rezultat as $r){
 				$artw_get[] = array(
-					'id' => intval($r['id']),
+					'id' => intval($r['artwork_id']),
 					'author' => $r['name_'.$lang],
 					'title' => $r['title_'.$lang]
 				);
-			}		
+			}
 			$result['artworks'] = $artw_get;
 
 
 			/* Get two Texts for given keyword */
-			$query = $db -> prepare("SELECT * FROM artworks INNER JOIN artists ON artworks.artist_id=artists.artist_id WHERE 
+			$query = $db -> prepare("SELECT * FROM artworks INNER JOIN artists ON artworks.artist_id=artists.artist_id WHERE
 				media_type = 'text' AND
-				(title_sr LIKE '%".$keyword."%' 
-				OR title_en LIKE '%".$keyword."%' 
-				OR year LIKE '%".$keyword."%' 
+				(title_sr LIKE '%".$keyword."%'
+				OR title_en LIKE '%".$keyword."%'
+				OR year LIKE '%".$keyword."%'
 				OR publisher LIKE '%".$keyword."%')
 				LIMIT 2");
 			$query -> execute(); $rezultat = $query -> fetchAll();
 
 			foreach($rezultat as $r){
 				$artt_get[] = array(
-					'id' => intval($r['id']),
+					'id' => intval($r['artwork_id']),
 					'author' => $r['name_'.$lang],
 					'title' => $r['title_'.$lang]
 				);
-			}		
+			}
 			$result['texts'] = $artt_get;
 
 		}
 		else{
 			echo 'No keyword specified.';
-		}	
+		}
 
 		/* -> return */
 		echo json_encode($result);
@@ -159,11 +159,11 @@
 	/* getSearchResults() --- end */
 
 
-	/* getCategory() --- Get artist, artworks & texts from category id */  
+	/* getCategory() --- Get artist, artworks & texts from category id */
 	function getCategory(){
 
 		$category_id = $_GET['category_id'];
-		
+
 		if(isset($category_id) && !empty($category_id)){
 
 				require('init.php');
@@ -190,9 +190,9 @@
 				$query -> execute(); $rezultat = $query -> fetchAll();
 				foreach($rezultat as $r){
 					$dela[] = array(
-						'id' => intval($r['id']),
-						'title' => $r['title_'.$_GET['lang']],  
-						'path' => 'media/'.$r['id'].'/thumb.jpg'
+						'id' => intval($r['artwork_id']),
+						'title' => $r['title_'.$_GET['lang']],
+						'path' => 'media/'.$r['artwork_id'].'/thumb.jpg'
 					);
 				}
 				$categories['artworks'] = $dela;
@@ -200,7 +200,7 @@
 		}
 		else{
 			echo 'No category_id is specified.';
-		}	
+		}
 	/* -> return */
 	echo json_encode($categories);
 	}
@@ -209,13 +209,13 @@
 
 	/* getOneText() --- Get single text from text_id */
 	function getOneText(){
-	
+
 		require('init.php');
 		$text_id = $_GET['text_id'];
 		$lang = $_GET['lang'];
 
 		if(isset($text_id) && !empty($text_id)) {
- 		
+
 			$query = $db -> prepare("SELECT * FROM texts WHERE text_id=".$text_id);
 			$query -> execute(); $rezultat = $query -> fetchAll();
 
@@ -223,7 +223,7 @@
 				$text[] = array(
 					'id' => intval($r['text_id']),
 					'author' => $r['author_'.$lang],
-					'title' => $r['title_'.$lang],  
+					'title' => $r['title_'.$lang],
 					'body' => $r['body_'.$lang]
 				);
 			}
@@ -241,7 +241,7 @@
 	function getTexts(){
 
 		require('init.php');
-		$lang = $_GET['lang'];	
+		$lang = $_GET['lang'];
 		$query = $db -> prepare("SELECT * FROM texts");
 		$query -> execute(); $rezultat = $query -> fetchAll();
 
@@ -261,5 +261,5 @@
 
 	/* SOON -- MORE SHIT HERE -- SOON :) */
 
-	
+
 /* end. */?>
