@@ -257,6 +257,51 @@
  	}
  	/* getTexts() --- end */
 
+	/* getArtwork() --- Get artwork for specific id */
+	function getArtwork(){
+
+		$lang = $_GET['lang'];
+		$artwork_id = $_GET['artwork_id'];
+
+		$query = $db -> prepare(
+		"SELECT * FROM artworks
+		INNER JOIN categories ON
+		artworks.category_id=categories.id
+		INNER JOIN artists ON
+		artworks.artist_id=artists.artist_id
+		WHERE artwork_id LIKE ".$artwork_id."
+		");
+
+		$query -> execute(); $rezultat = $query -> fetchAll();
+
+		foreach($rezultat as $r){
+			$artwork['artwork'] = array(
+				'id' => intval($r['artwork_id']),
+				'artist_id' => intval($r['artist_id']),
+				'artist_name' => $r['name_'.$lang],
+				'category_id' => intval($r['category_id']),
+				'category_name' => $r['cat_title_'.$lang],
+				'title' => $r['title_'.$lang],
+				'year' => $r['year'],
+				'medium' => $r['medium_'.$lang],
+				'field' => $r['field_'.$lang],
+				'technique' => $r['technique_'.$lang],
+				'format' => $r['format_'.$lang],
+				'genre' => $r['genre_'.$lang],
+				'volume' => $r['volume'],
+				'publisher' => $r['publisher'],
+				'isbn' => $r['isbn'],
+				'production' => $r['production'],
+				'dimensions' => $r['dimensions'],
+				'runtime' => $r['runtime'],
+				'media_type' => $r['media_type'],
+				'files' => count(glob("../media/".$artwork_id."/[0-9]*\.jpg"))
+			);
+		}
+
+		echo json_encode($artwork);
+	}
+	/* getArtwork() --- end */
 
 
 	/* SOON -- MORE SHIT HERE -- SOON :) */
