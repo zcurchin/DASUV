@@ -54,6 +54,7 @@
 					'name' => $r['name_'.$lang],
 					'website' => $r['website'],
 					'biography' => $r['bio_'.$lang],
+					'aboutartist' => $r['aboutartist_'.$lang],
 					'path' => 'avatars/'.$r['artist_id'].'.jpg'
 				);
 			}
