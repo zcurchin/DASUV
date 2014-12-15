@@ -1,4 +1,7 @@
-/* Put your CSS here */
+* {
+	outline: none;
+}
+
 body {
 	overflow-y: scroll;
 }
