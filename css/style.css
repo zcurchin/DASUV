@@ -157,6 +157,7 @@ body.index.bg-3 {
 #main-nav-links li a:hover,
 #main-nav-links li a.active {
 	color: #222;
+	outline: none;
 }
 
 
@@ -487,6 +488,47 @@ body.index.bg-3 {
 
 
 
+/*
+---------------------------------------------
+	Text Template
+---------------------------------------------
+*/
+
+.artwork #main-content {
+	margin-left: 15%;
+	margin-top: 110px;
+}
+
+.artwork-preview-box {
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+	overflow: hidden;
+	margin: 50px;
+}
+
+.artwork-preview-box #artwork-slider {
+	list-style: none;
+	width: 1000px;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.artwork-preview-box #artwork-slider li {
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	float: left;
+}
+
+.artwork-preview-box .artwork-thumb {
+	position: absolute;
+}
+
+
+
 
 /*
 ---------------------------------------------
@@ -714,6 +756,10 @@ body.index.bg-3 {
 	.artist #main-content ul img {
 		width: 190px;
 		height: 190px;
+	}
+
+	.artwork #main-content {
+		margin-left: 22%;
 	}
 
 }

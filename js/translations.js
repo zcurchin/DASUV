@@ -27,7 +27,9 @@ I18n.translations.sr = {
   about_meta_12: 'koncept web portala',
   about_meta_13: 'dizajn web portala',
   about_meta_14: 'programiranje web portala',
-  about_meta_15: 'digitalizacija umetničkih radova'
+  about_meta_15: 'digitalizacija umetničkih radova',
+
+  author: 'Autor'
 
 };
 
@@ -60,6 +62,8 @@ I18n.translations.en = {
   about_meta_12: 'concept of web portal',
   about_meta_13: 'design & development',
   about_meta_14: 'development',
-  about_meta_15: 'digitization of artworks'
+  about_meta_15: 'digitization of artworks',
+
+  author: 'Author'
 
 };

@@ -90,8 +90,34 @@ App.ArtworkRoute = Ember.Route.extend({
       'method': 'getArtwork',
       'lang': I18n.locale,
       'artwork_id': params.artwork_id
-    }).then(function(data) {      
-      return data;
+    }).then(function(data) {
+      var model = data.artwork;      
+
+      // Set Thumbnails
+
+      model.thumbs = [];
+
+      var base_url = window.location.origin + window.location.pathname;      
+
+      if (model.files === 1 ||  model.files === 0){
+        var img_obj = {};        
+        img_obj.path = base_url + 'media/'+ data.artwork.id +'/thumb.jpg';
+        img_obj.index = 0;
+        model.thumbs.push(img_obj);
+      }
+
+      if (data.artwork.files > 1){
+        for(var i=1; i <= model.files; i++){
+          var img_obj = {};
+          img_obj.path = base_url + 'media/'+ data.artwork.id +'/t'+ i +'.jpg';
+          img_obj.index = i;
+          model.thumbs.push(img_obj);
+        }
+      }
+
+      console.log(model);
+      return model;
+      
     });
   }
 });
@@ -211,6 +237,17 @@ App.ArtistController = Ember.Controller.extend({
     }
   }
 });
+
+App.ArtworkController = Ember.Controller.extend({
+  actions: {
+    openSlider: function(index){
+      var thumbs = this.get('model').thumbs;
+      console.log(index);
+      console.log(thumbs);
+    }
+  }
+});
+
 
 
 

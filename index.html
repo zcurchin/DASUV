@@ -119,7 +119,6 @@
 
 
 
-
   <!--
   
   Artist Template
@@ -153,6 +152,32 @@
         {{/link-to}}
         </li>
       {{/each}}
+    </ul>
+  </script>
+
+
+
+  <!--
+  
+  Artwork Template
+  ============================================
+  -->
+  <script type="text/x-handlebars" id="artwork">
+    <div class="artwork-preview-box">
+      <ul id="artwork-slider" class="clearfix">
+      {{#each thumb in model.thumbs}}
+        <li>
+          <img class="artwork_thumb" {{bind-attr src=thumb.path}} {{action 'openSlider' thumb.index}}>
+        </li>
+      {{/each}}
+      </ul>      
+    </div>
+    
+    <ul id="artwork-details">
+      <li><span>{{i18n author}}</span><span>{{model.artist_name}}</span></li>
+      {{#if model.medium}}
+        <li>{{model.medium}}</li>
+      {{/if}}
     </ul>
   </script>
 

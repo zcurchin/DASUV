@@ -261,6 +261,7 @@
 	/* getArtwork() --- Get artwork for specific id */
 	function getArtwork(){
 
+		require('init.php');
 		$lang = $_GET['lang'];
 		$artwork_id = $_GET['artwork_id'];
 
