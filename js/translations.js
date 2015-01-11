@@ -8,6 +8,8 @@ I18n.translations.sr = {
   website: 'Internet stranica',
   biography: 'Biografija',
   bibliography: 'Bibliografija',
+  play: 'Pusti',
+  no_results: 'Nema rezultata pretrage',
 
   about_title: 'O projektu',
   about_body_1: 'Projekat Digitalni arhiv savremene umetnosti Vojvodine započet je 2013. godine od strane Zavoda za kulturu Vojvodine u Novom Sadu. Ideja projekta je da se na jednom mestu obuhvati i predstavi delatnost umetnika svih umetničkih disciplina sa teritorije Vojvodine uz pomoć digitalnih tehnologija i internet medija, i na taj način stvori internet resurs za proučavanje i komunikaciju sa svim oblastima savremenog stvaralaštva Vojvodine, omogući promocija umetnika i umetnosti Vojvodine u zemlji i inostranstvu, i objedini i predstavi bogata ponuda kulturne sfere ove pokrajine. Digitalni arhiv je namenjen svima, pre svega umetnicima kako bi im se pomoglo u domaćoj i međunarodnoj promociji i vidljivost, zatim istraživačima, radnicima kulture, studentima i svoj publici svih interesovanja.',
@@ -29,7 +31,21 @@ I18n.translations.sr = {
   about_meta_14: 'programiranje web portala',
   about_meta_15: 'digitalizacija umetničkih radova',
 
-  author: 'Autor'
+  author: 'Autor',
+  artwork_title: 'Naziv dela',
+  year: 'Godina',
+  category: 'Kategorija',
+  dimensions: 'Dimenzije',
+  genre: 'Žanr',
+  isbn: 'ISBN',
+  medium: 'Medij',
+  production: 'Produkcija',
+  publisher: 'Izdavač',
+  runtime: 'Vreme trajanja',
+  technique: 'Tehnika',
+  field: 'Oblast',
+  format: 'Format',
+  volume: 'Set'
 
 };
 
@@ -43,6 +59,8 @@ I18n.translations.en = {
   website: 'Website',
   biography: 'Biography',
   bibliography: 'Bibliography',
+  play: 'Play',
+  no_results: 'No results for this search',
 
   about_title: 'About the project',
   about_body_1: 'Project Digital Archive of contemporary art of Vojvodina was initiated in 2013 by Vojvodina Institute for culture. Idea of the project is to gather and present in one place activities of artists of all art disciplines from the teritory of Vojvodina with the usage of digital technologies and internet media, and thus create internet resource for studying and communication with all fields of contemporary creativity of Vojvodina, to enable promotion of artists and art of Vojvodina in country and abroad, and to incorporate and present rich cultural offer of this Province. Digital Archive is dedicated to everyone, to artists in the first place to assist them in national and international promotion and visibility, researchers, cultural workers, students and all public of all interests.',
@@ -64,6 +82,20 @@ I18n.translations.en = {
   about_meta_14: 'development',
   about_meta_15: 'digitization of artworks',
 
-  author: 'Author'
+  author: 'Author',
+  artwork_title: 'Title',
+  year: 'Year',
+  category: 'Category',
+  dimensions: 'Dimensions',
+  genre: 'Genre',
+  isbn: 'ISBN',
+  medium: 'Medium',
+  production: 'Production',
+  publisher: 'Publisher',
+  runtime: 'Runtime',
+  technique: 'Technique',
+  field: 'Field',
+  format: 'Format',
+  volume: 'Volume'
 
 };

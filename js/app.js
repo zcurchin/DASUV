@@ -11,6 +11,8 @@ if(readCookie('lang') === 'en'){
 
 bgIndex = 1;
 
+var baseURL = window.location.origin + window.location.pathname;
+
 
 
 // --------------------------------------------------------
@@ -95,13 +97,11 @@ App.ArtworkRoute = Ember.Route.extend({
 
       // Set Thumbnails
 
-      model.thumbs = [];
-
-      var base_url = window.location.origin + window.location.pathname;      
+      model.thumbs = [];     
 
       if (model.files === 1 ||  model.files === 0){
         var img_obj = {};        
-        img_obj.path = base_url + 'media/'+ data.artwork.id +'/thumb.jpg';
+        img_obj.path = baseURL + 'media/'+ data.artwork.id +'/thumb.jpg';
         img_obj.index = 0;
         model.thumbs.push(img_obj);
       }
@@ -109,12 +109,11 @@ App.ArtworkRoute = Ember.Route.extend({
       if (data.artwork.files > 1){
         for(var i=1; i <= model.files; i++){
           var img_obj = {};
-          img_obj.path = base_url + 'media/'+ data.artwork.id +'/t'+ i +'.jpg';
+          img_obj.path = baseURL + 'media/'+ data.artwork.id +'/t'+ i +'.jpg';
           img_obj.index = i;
           model.thumbs.push(img_obj);
         }
       }
-
       console.log(model);
       return model;
       
@@ -193,7 +192,10 @@ App.ApplicationController = Ember.Controller.extend({
       }      
     },
     showHideSearch: function(){
-      this.toggleProperty('visibleSearch');      
+      this.toggleProperty('visibleSearch');
+
+      $('#search-results').html('');
+      $('#search-input').val('').focus();      
 
       if(this.get('visibleCategories')){
         this.toggleProperty('visibleCategories');
@@ -239,13 +241,48 @@ App.ArtistController = Ember.Controller.extend({
 });
 
 App.ArtworkController = Ember.Controller.extend({
-  actions: {
-    openSlider: function(index){
-      var thumbs = this.get('model').thumbs;
-      console.log(index);
-      console.log(thumbs);
+  multiple_thumbs: function() {
+    var thumbs = this.get('model.thumbs');
+    if (thumbs.length > 1) {
+      return true;
+    } else {
+      return false;
     }
-  }
+  }.property('model.thumbs'),
+
+  image_type: function() {
+    var type = this.get('model.media_type');
+    if (type === 'img') { return true; } else { return false; }
+  }.property('model.media_type'),
+
+  video_type: function() {
+    var type = this.get('model.media_type');
+    if (type === 'video') { return true; } else { return false; }
+  }.property('model.media_type'),
+
+  sound_mp3: null,
+  sound_ogg: null,
+
+  sound_type: function() {
+    var self = this;
+    var type = this.get('model.media_type');
+    if (type === 'sound') {
+      this.sound_mp3 = baseURL + 'media/' + self.get('model.id') + '/sound.mp3';
+      this.sound_mp3 = baseURL + 'media/' + self.get('model.id') + '/sound.ogg';
+      return true;
+    } else { return false; }
+  }.property('model.media_type'),
+
+  thumbs_length: function() {
+    var thumbs = this.get('model.thumbs');
+    return thumbs.length;
+  }.property('model.thumbs'),
+
+  current_thumb: 0,
+  current_thumb_num: function(){
+    return this.current_thumb + 1;
+  }.property('current_thumb')
+
 });
 
 
@@ -257,19 +294,253 @@ App.ArtworkController = Ember.Controller.extend({
 
 var SearchBoxView = Ember.View.extend({
   templateName: 'search-box',
-  className: 'search-box',
   keyUp: function() {
+    var self = this;
     var query = this.get('controller.searchValue');
+    var results_el = $('#search-results');
+    results_el.html('');
     inputSearchDelay(function(){      
       if(query.length > 2){
         return $.getJSON('services/api.php', {
           'method': 'getSearchResults',
-          'lang': I18n.locale
-        }).then(function(data) {      
-          return data;
+          'lang': I18n.locale,
+          'keyword': query
+        }).then(function(data) {
+          if (!data.artists && !data.artworks && !data.texts){
+            results_el.append('<p class="no-results">' + I18n.t('no_results') + '</p>');
+          } else {
+            if (data.artists) {
+              $.each(data.artists, function(k, v){
+                var tmpl = '' +
+                  '<a href="'+baseURL+'#/artist/'+v.id+'">' +
+                    '<div class="artist-result clearfix"><img src="'+baseURL+'avatars/'+v.id+'.jpg"/>' +
+                      '<p>'+v.name+'</p>' +
+                    '</div>' +
+                  '</a>';
+                results_el.append(tmpl);            
+              });
+            }
+            if (data.artworks) {
+              $.each(data.artworks, function(k, v){
+                var tmpl = '' +
+                  '<a href="'+baseURL+'#/artwork/'+v.id+'">' +
+                    '<div class="artwork-result clearfix"><img src="'+baseURL+'media/'+v.id+'/thumb.jpg"/>' +
+                      '<p>'+v.title+'</p>' +
+                      '<p class="author">'+v.author+'</p>' +
+                    '</div>' +
+                  '</a>';
+                results_el.append(tmpl);            
+              });
+            } 
+            results_el.click(function(){
+              self.set('controller.visibleSearch', false);
+              self.set('controller.fadeContent', false);
+            });
+          }      
         });
       }
     }, 300);    
+  }
+});
+
+
+var ArtworkPreviewBoxView = Ember.View.extend({
+  templateName: 'artwork-preview-box',
+  classNames: ['artwork-preview-box'],
+
+  slider_el: null,
+
+  didInsertElement: function(){
+    var slider_width = this.get('controller.thumbs_length') * 250;
+    this.slider_el = this.$('#artwork-slider');
+    this.slider_el.css('width', slider_width);
+    this.set('controller.current_thumb', 0);
+  },
+
+  actions: {
+    openFullScreen: function(type, index){
+      console.log('type: ' + type + ' index: ' + index);
+      var artwork_id = this.get('controller.model.id'),
+          path = baseURL + 'media/' + artwork_id,
+          total_artworks = this.get('controller.thumbs_length'),
+          viewport_width = $(window).width(),
+          viewport_height = $(window).height();
+
+      $('body').append('<div id="full-screen">');      
+      var fs_view_el = $('#full-screen');
+      fs_view_el.css({
+        'width': viewport_width,
+        'height': viewport_height
+      });
+
+      fs_view_el.append('<span id="fs-close-btn" class="icon-ex"></span>');
+
+      var spinner_target = document.getElementById('full-screen');
+      var spinner = new Spinner(spinner_opts);
+      spinner.spin(spinner_target);      
+
+      $('#fs-close-btn').click(function(){
+        fs_view_el.remove();
+      });
+
+      //$('html').keydown(function(e){});
+
+      var tmpl = '';
+
+      // -------------------------
+      // Image
+      // -------------------------
+
+      if (type === 'img') {
+        tmpl += '<div id="fs-slider" class="clearfix">';
+        
+        for (i=0; i < total_artworks; i++){
+          var num = i + 1;
+          tmpl += '<div class="fs-slide"><img src="'+ path +'/'+ num +'.jpg" /></div>';        
+        }      
+
+        tmpl += '</div>';
+
+        fs_view_el.append(tmpl);
+
+        var fs_slider_el = $('#fs-slider');
+        var fs_slide_el = fs_slider_el.find('.fs-slide');
+
+        fs_slide_el.css({
+          'width': viewport_width,
+          'height': viewport_height
+        });        
+
+        imagesLoaded(fs_slider_el, function(){
+          var images = fs_slider_el.find('img');
+          var slider_aspect = viewport_width / viewport_height;
+
+          for (i=0; i < images.length; i++){
+            var image = images[i],
+                img_w = image.naturalWidth,
+                img_h = image.naturalHeight,
+                img_aspect = img_w / img_h,
+                imageW,
+                imageH;
+
+            if (img_w <= viewport_width - 40 && img_h <= viewport_height - 40) {
+              imageW = img_w;
+              imageH = img_h;
+            } else if (img_aspect === 1) {
+              imageW = viewport_width - 40;
+              imageH = viewport_height - 40;
+            } else if (img_aspect > 1) {
+              if (img_aspect <= slider_aspect){
+                imageW = viewport_height - 40;
+                imageH = imageH * img_aspect;
+              } else {
+                imageW = viewport_width - 40;
+                imageH = imageW / img_aspect;          
+              }
+            } else if (img_aspect < 1) {
+              imageH = (viewport_height - 40);
+              imageW = imageH * img_aspect;
+            }
+
+            $(image).css({'width': imageW, 'height': imageH});
+          }
+
+          if (total_artworks > 1) {
+            ctrls = '';
+            ctrls += '<div id="fs-slider-ctrls" class="clearfix">';
+            ctrls +=   '<span id="fs-prev-btn" class="icon-arr-left fs-ctrl"></span>';
+            ctrls +=   '<span id="fs-next-btn" class="icon-arr-right fs-ctrl"></span>';
+            ctrls += '</div>';
+
+            fs_view_el.append(ctrls);
+            $('#fs-prev-btn, #fs-next-btn').css('top', viewport_height / 2 - 35);
+
+            var total = total_artworks;
+            var current;
+            if (index === 1) current = 0;
+            if (index > 1) current = index - 1;
+
+            $('#fs-prev-btn').click(function(){
+              console.log(current);
+              if (current > 0) {
+                current--;
+                var left = viewport_width * current * -1;
+                console.log(current, left);              
+                fs_slider_el.animate({'left': left}, 300);
+              }
+            });
+
+            $('#fs-next-btn').click(function(){
+              console.log(current);
+              if (current !== total_artworks - 1) {
+                current++;
+                var left = viewport_width * current * -1;
+                console.log(current, left);              
+                fs_slider_el.animate({'left': left}, 300);
+              }
+            });
+          }
+
+          if (index > 1) {
+            fs_slider_el.css('left', viewport_width * (index - 1) * -1);
+          }
+          
+          spinner.stop();
+          fs_slider_el.animate({'opacity': 1}, 300);
+        });
+
+      // -------------------------
+      // Video
+      // -------------------------
+                
+      } else if (type === 'video') {
+        tmpl += '<div id="fs-video">';
+        tmpl +=   '<h1>Video</h1>';
+        tmpl += '</div>';
+
+        spinner.stop();
+        fs_view_el.append(tmpl);
+      }
+
+      // -------------------------
+      // Sound
+      // -------------------------
+
+      else if (type === 'sound') {
+        tmpl += '<div id="fs-audio">';
+        tmpl +=   '<audio controls autoplay>';
+        tmpl +=     '<source src='+this.get('controller.sound_mp3')+' type="audio/ogg">';
+        tmpl +=     '<source src='+this.get('controller.sound_ogg')+' type="audio/mpeg">';
+        tmpl +=   '</audio>';
+        tmpl += '</div>';
+
+        spinner.stop();
+        fs_view_el.append(tmpl);      
+      }
+
+    },
+
+    prevThumb: function(){
+      var current_thumb = this.get('controller.current_thumb_num'),
+          total_thumbs = this.get('controller.thumbs_length');
+      
+      if (current_thumb > 1) {
+        this.decrementProperty('controller.current_thumb');
+        var left = this.get('controller.current_thumb') * 250 * -1;
+        this.slider_el.animate({'left':left}, 300);
+      }
+    },
+
+    nextThumb: function(){
+      var current_thumb = this.get('controller.current_thumb_num'),
+          total_thumbs = this.get('controller.thumbs_length');
+
+      if (current_thumb !== total_thumbs) {
+        this.incrementProperty('controller.current_thumb');
+        var left = this.get('controller.current_thumb') * 250 * -1;      
+        this.slider_el.animate({'left':left}, 300);        
+      }
+    }
   }
 });
 

@@ -66,8 +66,11 @@
   Search Box View
   ============================================
   -->
-  <script type="text/x-handlebars" data-template-name="search-box">  
-    {{input autofocus="autofocus" id="search-input" type="text" value=searchValue placeholder=searchPlaceholder class=visibleSearch}}
+  <script type="text/x-handlebars" data-template-name="search-box">
+    <div id="search-box" {{bind-attr class="visibleSearch"}}>  
+      {{input autofocus="autofocus" id="search-input" type="text" value=searchValue placeholder=searchPlaceholder}}
+      <div id="search-results"></div>
+    </div>
   </script>
 
 
@@ -162,22 +165,188 @@
   Artwork Template
   ============================================
   -->
+
+  <!-- Artwork Preview Box View  -->
+  <script type="text/x-handlebars" data-template-name="artwork-preview-box">
+    {{#if image_type}}
+      {{#if multiple_thumbs}}
+      <div class="slider-wrapper">  
+        <ul id="artwork-slider" class="clearfix">
+        {{#each thumb in model.thumbs}}
+          <li>
+            <img class="artwork_thumb"
+            {{bind-attr src=thumb.path}}
+            {{action 'openFullScreen' model.media_type thumb.index target=view}}>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+      <div class="slider-ctrl">
+        <span class="arrow-btn left icon-arr-left" {{action 'prevThumb' target=view}}></span>
+        <span class="arrow-btn right icon-arr-right" {{action 'nextThumb' target=view}}></span>
+        <span class="counter">{{current_thumb_num}} / {{thumbs_length}}</span>
+      </div>
+      {{else}}
+      <div class="slider-wrapper">
+        {{#each thumb in model.thumbs}}
+        <img class="artwork_thumb"
+        {{bind-attr src=thumb.path}}
+        {{action 'openFullScreen' model.media_type thumb.index target=view}}>
+        {{/each}}
+      </div>
+      {{/if}}
+    {{/if}}
+
+    {{#if video_type}}
+      <div class="slider-wrapper">  
+        <ul id="artwork-slider" class="clearfix">
+        {{#each thumb in model.thumbs}}
+          <li>
+            <img class="artwork_thumb"
+            {{bind-attr src=thumb.path}}
+            {{action 'openFullScreen' model.media_type target=view}}>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+      <div class="slider-ctrl">
+        <span class="arrow-btn play" {{action 'openFullScreen' model.media_type target=view}}>&vrtri; {{i18n play}}</span>
+      </div> 
+    {{/if}}
+
+    {{#if sound_type}}
+      <div class="slider-wrapper">  
+        <ul id="artwork-slider" class="clearfix">
+        {{#each thumb in model.thumbs}}
+          <li>
+            <img class="artwork_thumb"
+            {{bind-attr src=thumb.path}}
+            {{action 'openFullScreen' model.media_type target=view}}>
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+      <div class="slider-ctrl">
+        <span class="arrow-btn play" {{action 'openFullScreen' model.media_type target=view}}>&vrtri; {{i18n play}}</span>
+      </div> 
+    {{/if}}
+
+    {{#if text_type}}
+    {{/if}}
+
+  </script>
+  
   <script type="text/x-handlebars" id="artwork">
-    <div class="artwork-preview-box">
-      <ul id="artwork-slider" class="clearfix">
-      {{#each thumb in model.thumbs}}
-        <li>
-          <img class="artwork_thumb" {{bind-attr src=thumb.path}} {{action 'openSlider' thumb.index}}>
-        </li>
-      {{/each}}
-      </ul>      
-    </div>
+
+    {{view 'ArtworkPreviewBoxView'}}
     
     <ul id="artwork-details">
-      <li><span>{{i18n author}}</span><span>{{model.artist_name}}</span></li>
+      <li>
+        <span class="art-label">{{i18n author}}</span>
+        <span>
+          {{#link-to 'artist' model.artist_id }}        
+            {{model.artist_name}}
+          {{/link-to}}
+        </span>
+      </li>
+
+      <li>
+        <span class="art-label">{{i18n artwork_title}}</span>
+        <span>{{model.title}}</span>
+      </li>
+
+      <li>
+        <span class="art-label">{{i18n year}}</span>
+        <span>{{model.year}}.</span>
+      </li>
+
+      <li>
+        <span class="art-label">{{i18n category}}</span>
+        <span>
+          {{#link-to 'category' model.category_id }}        
+            {{model.category_name}}
+          {{/link-to}}
+        </span>
+      </li>      
+
       {{#if model.medium}}
-        <li>{{model.medium}}</li>
+      <li>
+        <span class="art-label">{{i18n medium}}</span>
+        <span>{{model.medium}}</span>
+      </li>
       {{/if}}
+
+      {{#if model.field}}
+      <li>
+        <span class="art-label">{{i18n field}}</span>
+        <span>{{model.field}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.dimensions}}
+      <li>
+        <span class="art-label">{{i18n dimensions}}</span>
+        <span>{{model.dimensions}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.format}}
+      <li>
+        <span class="art-label">{{i18n format}}</span>
+        <span>{{model.format}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.genre}}
+      <li>
+        <span class="art-label">{{i18n genre}}</span>
+        <span>{{model.genre}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.isbn}}
+      <li>
+        <span class="art-label">{{i18n isbn}}</span>
+        <span>{{model.isbn}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.production}}
+      <li>
+        <span class="art-label">{{i18n production}}</span>
+        <span>{{model.production}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.publisher}}
+      <li>
+        <span class="art-label">{{i18n publisher}}</span>
+        <span>{{model.publisher}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.runtime}}
+      <li>
+        <span class="art-label">{{i18n runtime}}</span>
+        <span>{{model.runtime}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.technique}}
+      <li>
+        <span class="art-label">{{i18n technique}}</span>
+        <span>{{model.technique}}</span>
+      </li>
+      {{/if}}
+
+      {{#if model.volume}}
+      <li>
+        <span class="art-label">{{i18n volume}}</span>
+        <span>{{model.volume}}</span>
+      </li>
+      {{/if}}
+
+
     </ul>
   </script>
 

@@ -127,7 +127,7 @@ body.index.bg-3 {
 
 #lang-select p {
 	border-left: 1px solid #ddd;
-	padding: 10px 20px 10px;
+	padding: 12px 20px 10px;
 	margin: 12px 0 0 20px;
 	color: #555;
 }
@@ -182,22 +182,85 @@ body.index.bg-3 {
 	height: 145px;
 }
 
+#search-box {
+	width: 400px;
+	height: 400px;
+	margin-left: 101%;
+	display: none;
+}
+
+#search-box.visible-search {
+	display: block;
+}
+
 #search-input {
-	position: absolute;
-	top: 0px;
-	right: -363px;
-	width: 330px;
+	width: 368px;
 	border: none;
 	background: #fff;
 	box-shadow: 0 1px 0 0 rgba(0,0,0,0.1);
 	font-size: 30px;
 	padding: 20px 16px;
-	display: none;
+	
 	outline: none;
 }
 
-#search-input.visible-search {
+#search-results a,
+#search-results a:visited,
+#search-results a:hover {
+	text-decoration: none;
+	color: #333;
 	display: block;
+}
+
+#search-results a:hover .artist-result {
+	background: #f5f5f5;
+}
+
+#search-results .artist-result,
+#search-results .artwork-result {
+	background: #fff;
+	border-bottom: 1px solid #ddd;
+}
+
+#search-results .artist-result img,
+#search-results .artwork-result img {
+	width: 60px;
+	height: 60px;
+	border-radius: 100px;
+	padding: 12px;
+	margin-right: 12px;
+	float: left;
+}
+
+#search-results .artist-result p {
+	font-size: 20px;
+	padding: 31px 0 7px;
+	margin: 0;
+}
+
+#search-results .artwork-result p {
+	font-size: 16px;
+	padding: 24px 0 2px;
+	margin: 0;
+}
+
+#search-results .artwork-result img {
+	border-radius: 0;
+}
+
+#search-results .artwork-result p.author {
+	font-size: 14px;
+	color: #666;
+	padding: 0;
+}
+
+#search-results .no-results {
+	background: #fff;
+	margin: 0;
+	padding: 30px 17px;
+	border-bottom: 1px solid #ddd;
+	color: #333;
+	font-size: 18px;
 }
 
 #category-nav {
@@ -371,18 +434,18 @@ body.index.bg-3 {
 
 .link {
 	text-decoration: none;
-	color: #4AA2CC;
+	color: #4A91CC;
 	font-size: 16px;
+}
+
+.link:hover {
+	color: #0F638B;
 }
 
 .sep {
 	border-top: 1px solid #EBEBEB;
 	margin-left: 290px;
 	width: 200px;
-}
-
-.link:hover {
-	color: #0F638B;
 }
 
 .extra-info {
@@ -428,34 +491,6 @@ body.index.bg-3 {
 
 /*
 ---------------------------------------------
-	Text Template
----------------------------------------------
-*/
-
-.text-title {
-	font-size: 42px;
-	font-weight: normal;
-	color: #333;
-	margin: 130px 0 5px;
-}
-
-.text-author {
-	margin: 0 0 50px;
-	color: #666;
-}
-
-.text-body {
-	color: #444;
-	font-size: 18px;
-	line-height: 27px;
-	max-width: 650px;
-	padding-bottom: 150px;
-}
-
-
-
-/*
----------------------------------------------
 	About Template
 ---------------------------------------------
 */
@@ -487,52 +522,37 @@ body.index.bg-3 {
 }
 
 
-
 /*
 ---------------------------------------------
 	Text Template
 ---------------------------------------------
 */
 
-.artwork #main-content {
-	margin-left: 15%;
-	margin-top: 110px;
+.text-title {
+	font-size: 42px;
+	font-weight: normal;
+	color: #333;
+	margin: 130px 0 5px;
 }
 
-.artwork-preview-box {
-	width: 250px;
-	height: 250px;
-	overflow: hidden;
-	position: relative;
-	overflow: hidden;
-	margin: 50px;
+.text-author {
+	margin: 0 0 50px;
+	color: #666;
 }
 
-.artwork-preview-box #artwork-slider {
-	list-style: none;
-	width: 1000px;
-	display: block;
-	margin: 0;
-	padding: 0;
+.text-body {
+	color: #444;
+	font-size: 18px;
+	line-height: 27px;
+	max-width: 650px;
+	padding-bottom: 150px;
 }
-
-.artwork-preview-box #artwork-slider li {
-	width: 250px;
-	height: 250px;
-	overflow: hidden;
-	float: left;
-}
-
-.artwork-preview-box .artwork-thumb {
-	position: absolute;
-}
-
 
 
 
 /*
 ---------------------------------------------
-	Buttons
+	Texts Template
 ---------------------------------------------
 */
 
@@ -570,6 +590,256 @@ body.index.bg-3 {
 	color: #555;
 	margin: 5px 0 0;
 }
+
+
+
+/*
+---------------------------------------------
+	Artwork Template
+---------------------------------------------
+*/
+
+.artwork #main-content {
+	margin-left: 15%;
+	margin-top: 60px;
+}
+
+.artwork #main-content:before,
+.artwork #main-content:after {
+	content: " ";
+	display: table;
+}
+
+.artwork #main-content:after {
+	clear: both;
+}
+
+.artwork-preview-box {
+	width: 250px;
+	overflow: hidden;
+	position: relative;
+	overflow: hidden;
+	margin: 50px;
+	float: left;
+}
+
+.artwork-preview-box .slider-wrapper {
+	height: 250px;
+}
+
+.artwork-preview-box #artwork-slider {
+	height: 250px;
+	width: 250px;
+	overflow: hidden;
+	list-style: none;
+	display: block;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.artwork-preview-box #artwork-slider li {
+	width: 250px;
+	height: 250px;
+	overflow: hidden;
+	float: left;
+	cursor: -moz-zoom-in;
+	cursor: -webkit-zoom-in;
+}
+
+.artwork-preview-box .artwork-thumb {
+	position: absolute;
+}
+
+.slider-ctrl {
+	position: relative;
+	width: 100%;
+	height: 50px;
+	margin-top: 15px;
+}
+
+.slider-ctrl .counter {
+	float: right;
+	color: #444;
+	display: inline-block;
+	margin-top: 10px;
+}
+
+.arrow-btn {
+	background: transparent; 
+	position: absolute;
+	padding: 10px;
+	border-radius: 50px;
+	font-size: 18px;
+	color: #333;
+	border: 2px solid #ddd;
+}
+
+.arrow-btn.left {
+	left: 0;
+}
+
+.arrow-btn.right {
+	left: 45px;
+}
+
+.arrow-btn.play {
+	padding: 5px 15px;
+}
+
+.arrow-btn:hover {
+	cursor: pointer;
+	background: #ddd;
+}
+
+#artwork-details {
+	list-style: none;
+	margin: 0;
+	margin-top: 50px;
+	float: left;
+	padding: 0;
+	width: 430px;
+}
+
+#artwork-details li {
+	padding: 0;
+	border-bottom: 1px solid #EBEBEB;
+}
+
+#artwork-details li:first-child {
+	border-top: 1px solid #EBEBEB;
+}
+
+#artwork-details span {
+	padding: 10px;
+	display: inline-block;
+}
+
+#artwork-details a,
+#artwork-details a:visited,
+#artwork-details a:active {
+	color: #4A91CC;
+	text-decoration: none;
+}
+
+#artwork-details a:hover {
+	color: #0F638B;
+}
+
+#artwork-details a {
+	
+}
+
+#artwork-details .art-label {
+	border-right: 1px solid #EBEBEB;
+	width: 110px;	
+}
+
+
+
+/*
+---------------------------------------------
+	Full Screen
+---------------------------------------------
+*/
+
+#full-screen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.96);
+	z-index: 1000;
+	overflow: hidden;
+}
+
+#fs-slider {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	opacity: 0;
+}
+
+#fs-slider .fs-slide {
+	float: left;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+#fs-close-btn {
+	position: absolute;
+	color: #fff;
+	padding: 20px;
+	top: 0;
+	right: 0;
+	font-size: 36px;
+	opacity: 0.3;
+	z-index: 10000;
+}
+
+#fs-close-btn:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}
+
+#fs-prev-btn,
+#fs-next-btn {
+	color: #838383;
+	padding: 20px;
+	position: absolute;
+	display: block;
+	top: 200px;
+	cursor: pointer;
+	font-size: 30px;
+	background: rgba(0,0,0,0.5);
+	border-radius: 200px;
+}
+
+#fs-prev-btn:hover,
+#fs-next-btn:hover {
+	color: #fff;
+}
+
+#fs-prev-btn {
+	left: 10px;
+}
+
+#fs-next-btn {
+	right: 10px;
+}
+
+#fs-audio {
+	width: 100%;
+	height: 100%;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+#fs-audio audio {
+	width: 400px;
+}
+
+#fs-video {
+	width: 100%;
+	height: 100%;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+#fs-video h1 {
+	color: #999;
+}
+
+
+
 
 
 
@@ -632,14 +902,6 @@ body.index.bg-3 {
 */
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,latin-ext);
-
-
-
-/*
----------------------------------------------
-	Icons
----------------------------------------------
-*/
 
 @font-face {
 	font-family: 'dasuv_icons';
@@ -760,6 +1022,11 @@ body.index.bg-3 {
 
 	.artwork #main-content {
 		margin-left: 22%;
+	}
+
+	#artwork-details {
+		width: 496px;
+		margin-left: 50px;
 	}
 
 }
