@@ -297,6 +297,7 @@
 				'dimensions' => $r['dimensions'],
 				'runtime' => $r['runtime'],
 				'media_type' => $r['media_type'],
+				'video_id' => $r['video_id'],
 				'files' => count(glob("../media/".$artwork_id."/[0-9]*\.jpg"))
 			);
 		}
