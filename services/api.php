@@ -306,8 +306,61 @@
 	}
 	/* getArtwork() --- end */
 
+	/* getArtists() --- Get artwork for specific id */
+	function getArtists(){
 
-	/* SOON -- MORE SHIT HERE -- SOON :) */
+		require('init.php');
+		$lang = $_GET['lang'];
+		$cat_id = $_GET['category_id'];
+		$fromNum = $_GET['fromNum'];
 
+		/* Check if category set */
+		if (!empty($cat_id)){
+
+				/* Return 4 artists for given category */
+				$query = $db -> prepare("SELECT artist_id, name_".$lang.",cat_title_".$lang."
+				FROM artists LEFT JOIN categories ON
+				categories.id=".$cat_id."
+				WHERE artists.category_id=".$cat_id."");
+				$query -> execute(); $rezultat = $query -> fetchAll();
+				$totalrows = count($rezultat);
+
+				/* Set category info */
+				$kategorija[]=array(
+					'category_name' => $rezultat[0]['cat_title_'.$lang],
+					'category_id' => $cat_id,
+					'total' => $totalrows
+				);
+
+				/* Check if fromNum is set */
+				if(empty($fromNum)){
+					/* Return first four artists for given category */
+					for ($i=0; $i<4; $i++) {
+						array_push($umetnici[$i]['artist_id'] = intval($rezultat[$i]['artist_id']));
+						array_push($umetnici[$i]['name'] = $rezultat[$i]['name_'.$lang]);
+						array_push($umetnici[$i]['path'] = 'avatars/'. $rezultat[$i]['artist_id']. '.jpg');
+					}
+				}else{
+					/* Return fromNum+4 artists for given category */
+					for ($i=$fromNum; $i<=$fromNum+3; $i++) {
+						if(!empty($rezultat[$i])){
+							array_push($umetnici[$i]['artist_id'] = intval($rezultat[$i]['artist_id']));
+							array_push($umetnici[$i]['name'] = $rezultat[$i]['name_'.$lang]);
+							array_push($umetnici[$i]['path'] = 'avatars/'. $rezultat[$i]['artist_id']. '.jpg');
+						}
+					}
+				}
+
+				/* Dump entire results */
+				$result_full['category_info'] = $kategorija;
+				$result_full['artists'] = $umetnici;
+				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+
+		}else{
+			echo 'Kategorija nije zadata!';
+		}
+
+	}
+	/* getArtists() --- end */
 
 /* end. */?>
