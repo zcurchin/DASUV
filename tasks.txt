@@ -1,52 +1,43 @@
-I
-SERVISI
 
-- getArtists($cat_id, $fromNum)
-[ako ima cat_id vrati umetnike za kategoriju   ]
-[u suprotnom za svaku kategoriju po 4 umetnika ]
+***********
+* SERVISI *
+***********
 
-				/* Scenario: All artists  */
-				/* getArtists() 					*/
-				[
-					{
-						'category_name': 'Vizuelna umetnost',
-						'category_id': '1',
-						'total': '12',
-						'artists':[
-							{
-								'artist_id': 1,
-								'name': 'John Doe',
-								'path': 'avatars/1.jpg'
-							},
-							{
-								'artist_id': 2,
-								'name': 'Jane Doe',
-								'path': 'avatars/2.jpg'
-							}
-						]
-					}
-				]
+- getArtists($category_id, $fromNum)
 
-				/* Scenario: Additional artists             */
-				/* getArtists($cat_id, $fromNum)            */
-				/* $fromNum označava broj umetnika u DOM-u  */
-				[
-					{
-						'artist_id': 5,
-						'name': 'John Doe',
-						'path': 'avatars/1.jpg'
-					},
-					{
-						'artist_id': 6,
-						'name': 'Jane Doe',
-						'path': 'avatars/2.jpg'
-					}
-				]
+Servisu prosleđuješ 'category_id' i 'fromNum'. Ako mu ne proslediš fromNum, vratiće ti samo prva četiri umetnika za zadatu kategoriju, što je isto kao da si mu prosledio fromNum=0. To je čisto da podesiš prva četiri pre nego što user zatraži još umetnika iz kategorije.
 
+Nakon toga šalješ fromNum=4, pa fromNum=8, pa fromNum=12 i tako dalje... Mislim da ti je to u JavaScriptu nešto tipa fromNum += 4, dakle dodaš četiri na staru vrednost i tako dalje. Kada servis više ne bude imao šta da ti vrati, vraćaće ti [null] vrednost za 'artists' u JSON-u. Tako ćeš moći da detektuješ da više nema rezultata.
 
-- getArtwork($artwork_id)
-[ vraća SVE parametre za traženo delo ]
-
+	[
+		{
+			'category_name': 'Vizuelna umetnost',
+			'category_id': '1',
+			'total': '12',
+			'artists':[
+				{
+					'artist_id': 1,
+					'name': 'John Doe',
+					'path': 'avatars/1.jpg'
+				},
+				{
+					'artist_id': 2,
+					'name': 'Jane Doe',
+					'path': 'avatars/2.jpg'
+				},
+				{
+					'artist_id': 3,
+					'name': 'Joe Doe',
+					'path': 'avatars/3.jpg'
+				},
+				{
+					'artist_id': 4,
+					'name': 'Jeanette Doe',
+					'path': 'avatars/4.jpg'
+				}
+			]
+		}
+	]
 
 
 
