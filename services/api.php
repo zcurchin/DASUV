@@ -306,7 +306,7 @@
 	}
 	/* getArtwork() --- end */
 
-	/* getArtists() --- Get artwork for specific id */
+	/* getArtists() --- Get artists for specific category_id */
 	function getArtists(){
 
 		require('init.php');
@@ -351,7 +351,7 @@
 					}
 				}
 
-				/* Dump entire results */
+				/* Dump total results */
 				$result_full['category_info'] = $kategorija;
 				$result_full['artists'] = $umetnici;
 				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
@@ -362,5 +362,62 @@
 
 	}
 	/* getArtists() --- end */
+
+	/* getArtworks() --- Get artworks for specific category_id */
+	function getArtworks(){
+
+		require('init.php');
+		$lang = $_GET['lang'];
+		$cat_id = $_GET['category_id'];
+		$fromNum = $_GET['fromNum'];
+
+		/* Check if category set */
+		if (!empty($cat_id)){
+
+				/* Return 4 artworks for given category */
+				$query = $db -> prepare("SELECT artwork_id, title_".$lang.",cat_title_".$lang."
+				FROM artworks LEFT JOIN categories ON
+				categories.id=".$cat_id."
+				WHERE artworks.category_id=".$cat_id."");
+				$query -> execute(); $rezultat = $query -> fetchAll();
+				$totalrows = count($rezultat);
+
+				/* Set category info */
+				$kategorija[]=array(
+					'category_name' => $rezultat[0]['cat_title_'.$lang],
+					'category_id' => $cat_id,
+					'total' => $totalrows
+				);
+
+				/* Check if fromNum is set */
+				if(empty($fromNum)){
+					/* Return first four artworks for given category */
+					for ($i=0; $i<4; $i++) {
+						array_push($umdela[$i]['artwork_id'] = intval($rezultat[$i]['artwork_id']));
+						array_push($umdela[$i]['title'] = $rezultat[$i]['title_'.$lang]);
+						array_push($umdela[$i]['path'] = 'media/'. $rezultat[$i]['artwork_id']. '/thumb.jpg');
+					}
+				}else{
+					/* Return fromNum+4 artworks for given category */
+					for ($i=$fromNum; $i<=$fromNum+3; $i++) {
+						if(!empty($rezultat[$i])){
+							array_push($umdela[$i]['artwork_id'] = intval($rezultat[$i]['artwork_id']));
+							array_push($umdela[$i]['title'] = $rezultat[$i]['title_'.$lang]);
+							array_push($umdela[$i]['path'] = 'media/'. $rezultat[$i]['artwork_id']. '/thumb.jpg');
+						}
+					}
+				}
+
+				/* Dump total results */
+				$result_full['category_info'] = $kategorija;
+				$result_full['artworks'] = $umdela;
+				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+
+		}else{
+			echo 'Kategorija nije zadata!';
+		}
+
+	}
+	/* getArtworks() --- end */
 
 /* end. */?>
