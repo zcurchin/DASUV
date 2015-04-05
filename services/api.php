@@ -197,7 +197,7 @@
 					);
 				}
 				$categories['artworks'] = $dela;
-
+				$categories['category_id'] = $category_id;
 		}
 		else{
 			echo 'No category_id is specified.';

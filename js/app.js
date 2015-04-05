@@ -75,6 +75,10 @@ App.ApplicationRoute = Ember.Route.extend({
 });
 
 App.CategoryRoute = Ember.Route.extend({
+  beforeModel: function(transition){
+    Em.$('.listbox-wrapper ul').css('left', '0px');
+  },
+
   model: function(params) {
     return $.getJSON('services/api.php', {
       'method': 'getCategory',
@@ -219,6 +223,7 @@ App.ApplicationController = Ember.Controller.extend({
   }
 });
 
+
 App.ArtistController = Ember.Controller.extend({
   visibleBio: false,
   visibleBib: false,
@@ -239,6 +244,7 @@ App.ArtistController = Ember.Controller.extend({
     }
   }
 });
+
 
 App.ArtworkController = Ember.Controller.extend({
   multiple_thumbs: function() {
@@ -268,7 +274,7 @@ App.ArtworkController = Ember.Controller.extend({
     var type = this.get('model.media_type');
     if (type === 'sound') {
       this.sound_mp3 = baseURL + 'media/' + self.get('model.id') + '/sound.mp3';
-      this.sound_mp3 = baseURL + 'media/' + self.get('model.id') + '/sound.ogg';
+      this.sound_ogg = baseURL + 'media/' + self.get('model.id') + '/sound.ogg';
       return true;
     } else { return false; }
   }.property('model.media_type'),
@@ -286,6 +292,147 @@ App.ArtworkController = Ember.Controller.extend({
 });
 
 
+App.CategoryController = Ember.Controller.extend({
+  enough_artists: function(){
+    var numberOfArtists = this.get('model.artists').length;
+    var enough = (numberOfArtists > 3) ? true : false;
+    return enough;
+  }.property('model.artists'),
+  
+  enough_artworks: function(){
+    var numberOfArtworks = this.get('model.artworks').length;
+    var enough = (numberOfArtworks > 3) ? true : false;
+    return enough;
+  }.property('model.artworks'),
+  
+  actions: {
+    getMoreArtists: function(){
+      var self = this;
+      var category_id = this.get('model.category_id');
+      var fromNum = this.get('model.artists').length;
+
+      var spinner_target = document.getElementById('artists-preloader');
+      var spinner = new Spinner(small_spinner_opts);
+      spinner.spin(spinner_target);
+      
+      $.getJSON('services/api.php', {
+        'method': 'getArtists',
+        'lang': I18n.locale,
+        'category_id': category_id,
+        'fromNum': fromNum
+      }).then(function(data) {
+
+        var total = data.category_info[0].total;
+        var current = self.get('model.artists').length;
+
+        if (current === total) { 
+          Ember.$('#more-artists-btn').hide();
+          spinner.stop();
+          return;
+        } 
+
+        var artists = self.get('model.artists');
+
+        $.each(data.artists, function(k,v){
+          var id = v.artist_id; delete v.artist_id; v.id = id;
+          artists.pushObject(v);   
+        });
+
+        var list_el = Ember.$('#artists-list');
+        var items = list_el.find('li');
+        var item_width = items[0].offsetWidth;
+        var items_total = artists.length;
+        var list_width = items_total * item_width;
+        
+        var list_left_num = (artists.length * item_width) - (4 * item_width);
+        var list_left = '-' + list_left_num + 'px';
+        console.log(list_left);
+
+        list_el.css( 'width', list_width );
+
+        self.set('model.artists', artists);
+
+        imagesLoaded(list_el, function(){
+          list_el.css( 'left', list_left);
+          Ember.$('.artists-list .icon-arr-left').show();
+          spinner.stop();        
+        });
+
+      });
+    },
+
+    getMoreArtworks: function(){
+      var self = this;
+      var category_id = this.get('model.category_id');
+      var fromNum = this.get('model.artworks').length;
+
+      var spinner_target = document.getElementById('artworks-preloader');
+      var spinner = new Spinner(small_spinner_opts);
+      spinner.spin(spinner_target);
+      
+      $.getJSON('services/api.php', {
+        'method': 'getArtworks',
+        'lang': I18n.locale,
+        'category_id': category_id,
+        'fromNum': fromNum
+      }).then(function(data) {
+
+        var total = data.category_info[0].total;
+        var current = self.get('model.artworks').length;
+
+        if (current === total) { 
+          Ember.$('#more-artworks-btn').hide();
+          spinner.stop();
+          return;
+        } 
+
+        var artworks = self.get('model.artworks');
+
+        $.each(data.artworks, function(k,v){
+          var id = v.artist_id; delete v.artist_id; v.id = id;
+          artworks.pushObject(v);   
+        });
+
+        var list_el = Ember.$('#artworks-list');
+        var items = list_el.find('li');
+        var item_width = items[0].offsetWidth;
+        var items_total = artworks.length;
+        var list_width = items_total * item_width;
+        
+        var list_left_num = (artworks.length * item_width) - (4 * item_width);
+        var list_left = '-' + list_left_num + 'px';
+        console.log(list_left);
+
+        list_el.css( 'width', list_width );
+
+        self.set('model.artworks', artworks);
+
+        imagesLoaded(list_el, function(){
+          list_el.css( 'left', list_left);
+          Ember.$('.artworks-list .icon-arr-left').show();
+          spinner.stop();        
+        });
+
+      });
+    },
+
+    scrollLeft_artists: function(){
+      scrollListLeft('artists');
+    },
+
+    scrollRight_artists: function(){
+      scrollListRight('artists');
+    },
+
+    scrollLeft_artworks: function(){
+      scrollListLeft('artists');
+    },
+
+    scrollRight_artworks: function(){
+      scrollListRight('artists');
+    }
+  }
+});
 
 
 // --------------------------------------------------------
@@ -339,7 +486,7 @@ var SearchBoxView = Ember.View.extend({
           }      
         });
       }
-    }, 300);    
+    }, 600);    
   }
 });
 
@@ -589,6 +736,75 @@ var inputSearchDelay = (function(){
     timer = setTimeout(callback, ms);
   };
 })();
+
+
+function scrollListLeft(type){
+  var list_el, button_left_el, button_right_el;
+  if (type === 'artists') {
+    list_el = $('#artists-list');
+    button_left_el = $('.artists-list .icon-arr-left');
+    button_right_el = $('.artists-list .icon-arr-right');
+  } else {
+    list_el = $('#artworks-list');
+    button_left_el = $('.artworks-list .icon-arr-left');
+    button_right_el = $('.artworks-list .icon-arr-right');
+  }
+
+  var item_width = list_el.find('li')[0].offsetWidth;
+  var list_width = list_el.length * item_width;
+  var current_left_string = list_el.css('left');
+  var current_left_number = parseInt(current_left_string.slice(0, - 2));
+
+  console.log(-current_left_number);
+  console.log(item_width*4);
+  
+  button_right_el.show();
+
+  if (-current_left_number <= item_width * 4) {
+    list_el.css('left', '0px');
+    button_left_el.hide();
+  } else {
+    var leftPos_num = -current_left_number - item_width * 4;
+    var leftPos = '-'+leftPos_num+'px';
+    list_el.css('left', leftPos);
+  }
+}
+
+function scrollListRight(type){
+  var list_el, button_left_el, button_right_el;
+  if (type === 'artists') {
+    list_el = $('#artists-list');
+    button_left_el = $('.artists-list .icon-arr-left');
+    button_right_el = $('.artists-list .icon-arr-right');
+  } else {
+    list_el = $('#artworks-list');
+    button_left_el = $('.artworks-list .icon-arr-left');
+    button_right_el = $('.artworks-list .icon-arr-right');
+  }
+
+  var item_width = list_el.find('li')[0].offsetWidth;
+  var list_width = list_el.width();
+  var items_width = item_width * 4;
+  var current_left_string = list_el.css('left');
+  var current_left_number = parseInt(current_left_string.slice(0, - 2));
+  var current_left = (current_left_number === 0) ? 0 : -current_left_number;
+
+  console.log(current_left);
+  console.log(list_width);
+  
+  button_left_el.show();
+
+  if (list_width - (current_left + items_width) > items_width) {
+    var leftPos_num = current_left + items_width;
+    var leftPos = '-'+leftPos_num+'px';
+    list_el.css('left', leftPos);
+  } else if (list_width - (current_left + items_width) <= items_width){
+    var leftPos_num = current_left + (list_width - (current_left + items_width));
+    var leftPos = '-'+leftPos_num+'px';
+    list_el.css('left', leftPos);
+    button_right_el.hide();
+  }
+}
 
 
 

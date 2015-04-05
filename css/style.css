@@ -310,44 +310,97 @@ body.index.bg-3 {
 
 .category #main-content {
 	padding-bottom: 70px;
+	margin-right: 0;
+	width: 80%;
 }
 
 .category #main-content h1 {
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	font-size: 24px;
-	border-bottom: 1px solid #EBEBEB;
 	padding-bottom: 20px;
 	color: #333;
+	margin-bottom: 0;
 }
 
 .category #main-content .label {
+	border-top: 1px solid #EBEBEB;
 	font-size: 15px;
 	font-weight: normal;
 	color: #666;
-	margin-bottom: 0;
+	padding: 20px 0;
+	float: left;
+	width: 100%;
+	margin: 0;
+}
+
+.listbox-wrapper {
+	width: 760px;
+	position: relative;
+}
+
+.listbox-inner {
+	height: 270px;
+	width: 760px;
+	overflow: hidden;
+	position: relative;
+}
+
+.more-items {
+  position: absolute;
+  top: 0;
+  right: -40px;
+  width: 47px !important;
+  height: 47px !important;
+  font-size: 47px !important;
+}
+
+.listbox-wrapper .icon-arr-left,
+.listbox-wrapper .icon-arr-right {
+	top: 130px;
+	z-index: 1000;
+	background: #fff;
+	display: none;
+}
+
+.listbox-wrapper .icon-arr-left {
+	left: -40px;
+}
+
+.listbox-wrapper .icon-arr-right {
+	right: -40px;
+}
+
+.listbox-wrapper .small-preloader {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 47px;
+	height: 47px;
+}
+
+.listbox-wrapper ul p {
+	text-align: center;
 }
 
 .category #main-content ul,
 .artist #main-content ul {
 	list-style: none;
-	margin: 10px 0 0;
+	margin: 0;
 	padding: 0;
-	position: relative;
 }
 
-.category #main-content ul.artists-list {
-	border-bottom: 1px solid #EBEBEB;
-	padding-bottom: 10px;
-	margin-bottom: 20px;
+.category #main-content ul {
+	 -webkit-transition: left 0.2s ease-in-out;
+  -moz-transition: left 0.2s ease-in-out;
+  -o-transition: left 0.2s ease-in-out;
+  transition: left 0.2s ease-in-out;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
-.category #main-content ul.artists-list p {
-	text-align: center;
-}
-
-.category #main-content ul li,
-.artist #main-content ul li {
+.listbox-wrapper ul li {
 	display: inline-block;
 	float: left;
 }
@@ -362,7 +415,8 @@ body.index.bg-3 {
 
 .category #main-content ul p {	
 	width: 150px;
-	margin: 0 10px;
+	margin: 0 auto;
+	line-height: 20px;
 }
 
 .category #main-content ul img,
@@ -627,6 +681,11 @@ body.index.bg-3 {
 	height: 250px;
 }
 
+.slider-wrapper img {
+	cursor: -moz-zoom-in;
+	cursor: -webkit-zoom-in;
+}
+
 .artwork-preview-box #artwork-slider {
 	height: 250px;
 	width: 250px;
@@ -645,8 +704,6 @@ body.index.bg-3 {
 	height: 250px;
 	overflow: hidden;
 	float: left;
-	cursor: -moz-zoom-in;
-	cursor: -webkit-zoom-in;
 }
 
 .artwork-preview-box .artwork-thumb {
@@ -878,14 +935,12 @@ body.index.bg-3 {
 }
 
 .icon-plus {
-	font-size: 40px;
-	position: absolute;
-	display: block;
-	width: 40px;
-	height: 40px;
-	top: -30px;
-	right: 0;
-	color: #bcbec0;
+  font-size: 40px;
+  display: block;
+  width: 40px;
+  height: 40px;
+  color: #bcbec0;
+  margin-top: 15px;
 }
 
 .icon-plus:hover {
@@ -1027,6 +1082,21 @@ body.index.bg-3 {
 	#artwork-details {
 		width: 496px;
 		margin-left: 50px;
+	}
+
+	.category #main-content {
+		width: 70%;
+		max-width: 920px;
+	}
+
+	.listbox-wrapper,
+	.listbox-inner {
+		width: 840px;
+	}
+
+	.listbox-wrapper .icon-arr-left,
+	.listbox-wrapper .icon-arr-right {
+		top: 150px;
 	}
 
 }
