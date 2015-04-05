@@ -411,6 +411,7 @@ body.index.bg-3 {
 	color: #222;
 	padding: 10px;
 	display: block;
+	outline: none;
 }
 
 .category #main-content ul p {	
@@ -541,6 +542,28 @@ body.index.bg-3 {
 	right: -10px;
 }
 
+.artist-work {
+	float: left;
+	width: 190px;
+	height: 300px;
+}
+
+.artist #main-content ul img {
+	width: 100%;
+	height: auto;
+}
+
+.artist-work p {
+	margin-top: 0;
+	line-height: 20px;
+	color: #222;
+	font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.artist-work p.year {
+	color: #555;
+}
 
 
 /*
@@ -1069,8 +1092,7 @@ body.index.bg-3 {
 		left: 0;
 	}
 
-	.category #main-content ul img,
-	.artist #main-content ul img {
+	.category #main-content ul img {
 		width: 190px;
 		height: 190px;
 	}
@@ -1096,7 +1118,24 @@ body.index.bg-3 {
 
 	.listbox-wrapper .icon-arr-left,
 	.listbox-wrapper .icon-arr-right {
-		top: 150px;
+		top: 140px;
+	}
+
+	.listbox-wrapper .icon-arr-left {
+		left: -50px;
+	}
+
+	.listbox-wrapper .icon-arr-right {
+		right: -50px;
+	}
+
+	.more-items {
+		right: -50px;
+	}
+
+	.artist-work {
+		width: 220px;
+		height: 330px;
 	}
 
 }

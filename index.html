@@ -168,11 +168,11 @@
     <h2 class="label">{{i18n artworks}}</h2>
     <ul class="clearfix">      
       {{#each artwork in model.artworks}}
-        <li>
+        <li class="artist-work">
         {{#link-to 'artwork' artwork.id}}
           <img class="artwork_thumb" {{bind-attr src=artwork.path}}>          
           <p>{{artwork.title}}</p>
-          <p>{{artwork.year}}</p>
+          <p class="year">{{artwork.year}}.</p>
         {{/link-to}}
         </li>
       {{/each}}

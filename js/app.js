@@ -352,6 +352,8 @@ App.CategoryController = Ember.Controller.extend({
 
         self.set('model.artists', artists);
 
+        Ember.$('.artists-list .icon-arr-right').hide();
+
         imagesLoaded(list_el, function(){
           list_el.css( 'left', list_left);
           Ember.$('.artists-list .icon-arr-left').show();
@@ -389,7 +391,7 @@ App.CategoryController = Ember.Controller.extend({
         var artworks = self.get('model.artworks');
 
         $.each(data.artworks, function(k,v){
-          var id = v.artist_id; delete v.artist_id; v.id = id;
+          var id = v.artwork_id; delete v.artwork_id; v.id = id;
           artworks.pushObject(v);   
         });
 
@@ -406,6 +408,8 @@ App.CategoryController = Ember.Controller.extend({
         list_el.css( 'width', list_width );
 
         self.set('model.artworks', artworks);
+
+        Ember.$('.artworks-list .icon-arr-right').hide();
 
         imagesLoaded(list_el, function(){
           list_el.css( 'left', list_left);
@@ -425,11 +429,11 @@ App.CategoryController = Ember.Controller.extend({
     },
 
     scrollLeft_artworks: function(){
-      scrollListLeft('artists');
+      scrollListLeft('artworks');
     },
 
     scrollRight_artworks: function(){
-      scrollListRight('artists');
+      scrollListRight('artworks');
     }
   }
 });
