@@ -449,7 +449,8 @@ body.index.bg-3 {
 */
 
 .artist-box {
-	margin-bottom: 30px;
+	margin-bottom: 50px;
+	padding-top: 20px;
 }
 
 .avatar {
@@ -459,7 +460,7 @@ body.index.bg-3 {
 	overflow: hidden;
 	display: block;
 	float: left;
-	margin-right: 40px;
+	margin-right: 70px;
 }
 
 .artist-name {
@@ -508,6 +509,16 @@ body.index.bg-3 {
 	color: #444;
 }
 
+.extra-info .icon-plus.visible-bio:before,
+.extra-info .icon-plus.visible-bib:before {
+  content: "\e604";
+  font-size: 50px;
+  display: inline-block;
+  margin-bottom: 20px;
+  position: relative;
+  top: 13px;
+}
+
 .extra-info:hover {
 	color: #222;
 	cursor: pointer;
@@ -519,6 +530,10 @@ body.index.bg-3 {
 	color: #555;
 	padding-right: 60px;
 	display: none;
+	margin-bottom: 70px;
+	max-width: 680px;
+	font-size: 18px;
+	line-height: 30px;
 }
 
 .biography.visible-bio,
@@ -583,6 +598,12 @@ body.index.bg-3 {
 	max-width: 650px;
 }
 
+.about #lang-select p {
+	color: #444;
+	font-size: 16px;
+	line-height: 16px;
+}
+
 .about .text-title {
 	margin-bottom: 60px;
 }
@@ -619,8 +640,8 @@ body.index.bg-3 {
 
 .text-body {
 	color: #444;
-	font-size: 18px;
-	line-height: 27px;
+  font-size: 20px;
+  line-height: 32px;
 	max-width: 650px;
 	padding-bottom: 150px;
 }
@@ -856,7 +877,7 @@ body.index.bg-3 {
 	padding: 20px;
 	top: 0;
 	right: 0;
-	font-size: 36px;
+	font-size: 56px;
 	opacity: 0.3;
 	z-index: 10000;
 }

@@ -1,44 +1,11 @@
+1.  Lightbox (fullscreen) - (key) ESC         : exit fullscreen
+2.  Lightbox (fullscreen) - (key) ARROW LEFT  : slide left 
+3.  Lightbox (fullscreen) - (key) ARROW RIGHT : slide right
+4.  Lightbox (fullscreen) - close button      : larger size
+5.  Search results box - results cloning fixed
+6.  Category view - getArtists(), getArtworks()
+7.  Video view - vimeo integration
+8.  Show biography button - reflecting state
 
-***********
-* SERVISI *
-***********
-
-- getArtists($category_id, $fromNum)
-
-Servisu prosleđuješ 'category_id' i 'fromNum'. Ako mu ne proslediš fromNum, vratiće ti samo prva četiri umetnika za zadatu kategoriju, što je isto kao da si mu prosledio fromNum=0. To je čisto da podesiš prva četiri pre nego što user zatraži još umetnika iz kategorije.
-
-Nakon toga šalješ fromNum=4, pa fromNum=8, pa fromNum=12 i tako dalje... Mislim da ti je to u JavaScriptu nešto tipa fromNum += 4, dakle dodaš četiri na staru vrednost i tako dalje. Kada servis više ne bude imao šta da ti vrati, vraćaće ti [null] vrednost za 'artists' u JSON-u. Tako ćeš moći da detektuješ da više nema rezultata.
-
-	[
-		{
-			'category_name': 'Vizuelna umetnost',
-			'category_id': '1',
-			'total': '12',
-			'artists':[
-				{
-					'artist_id': 1,
-					'name': 'John Doe',
-					'path': 'avatars/1.jpg'
-				},
-				{
-					'artist_id': 2,
-					'name': 'Jane Doe',
-					'path': 'avatars/2.jpg'
-				},
-				{
-					'artist_id': 3,
-					'name': 'Joe Doe',
-					'path': 'avatars/3.jpg'
-				},
-				{
-					'artist_id': 4,
-					'name': 'Jeanette Doe',
-					'path': 'avatars/4.jpg'
-				}
-			]
-		}
-	]
-
-
-
-- getArtworks($cat_id, $fromNum)
+9.  Texts - categorization
+10. Categories menu - hidden on DOM clicked

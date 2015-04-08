@@ -159,8 +159,8 @@
         {{/link-to}}
         <a class="link" {{bind-attr href=model.artist.website}} target="blank">{{i18n website}}</a>
         <p class="sep"></p>
-        <p class="extra-info" {{action 'toggleBio'}}>{{i18n biography}}<span class="icon-plus"></span></p>
-        <p class="extra-info" {{action 'toggleBib'}}>{{i18n bibliography}}<span class="icon-plus"></span></p>        
+        <p class="extra-info" {{action 'toggleBio'}}>{{i18n biography}}<span class="icon-plus" {{ bind-attr class=visibleBio}}></span></p>
+        <p class="extra-info" {{action 'toggleBib'}}>{{i18n bibliography}}<span class="icon-plus" {{ bind-attr class=visibleBib}}></span></p>        
       </div>
     </div>
     <p class="biography" {{ bind-attr class=visibleBio}}>{{model.artist.biography}}</p>
@@ -225,7 +225,7 @@
           <li>
             <img class="artwork_thumb"
             {{bind-attr src=thumb.path}}
-            {{action 'openFullScreen' model.media_type target=view}}>
+            {{action 'openFullScreen' model.media_type model.video_id target=view}}>
           </li>
         {{/each}}
         </ul>
@@ -381,12 +381,12 @@
   <script type="text/x-handlebars" id="texts">
     <ul class="texts-list">
     {{#each text in model}}
-      <li>
       {{#link-to 'text' text.id}}     
-        <h1>{{text.title}}</h1>
-        <p>{{text.author}}</p>
+        <li>
+          <h1>{{text.title}}</h1>
+          <p>{{text.author}}</p>
+        </li>
       {{/link-to}}
-      </li>
     {{/each}}
     </ul>
   </script>

@@ -142,7 +142,8 @@ App.TextsRoute = Ember.Route.extend({
     return $.getJSON('services/api.php', {
       'method': 'getTexts',
       'lang': I18n.locale
-    }).then(function(data) {      
+    }).then(function(data) {
+    console.log(data);      
       return data;
     });
   }
@@ -196,18 +197,30 @@ App.ApplicationController = Ember.Controller.extend({
       }      
     },
     showHideSearch: function(){
+      var self = this;
       this.toggleProperty('visibleSearch');
 
       $('#search-results').html('');
-      $('#search-input').val('').focus();      
+      $('#search-input').val('');
 
       if(this.get('visibleCategories')){
         this.toggleProperty('visibleCategories');
       } else {
         this.toggleProperty('fadeContent');
       }
+
+      $(document).unbind('click');
+      $(document).click(function(e){
+        if ($(e.target).attr('id') !== 'search-btn' && $(e.target).attr('id') !== 'search-input') {
+          if ($('#search-box').hasClass('visible-search')) {
+            self.set('visibleSearch', false);
+          }
+        }
+      });
+      $('#search-input').focus();     
     },
     showHideCategories: function(){
+      var self = this;
       this.toggleProperty('visibleCategories');
 
       if(this.get('visibleSearch')){
@@ -215,6 +228,15 @@ App.ApplicationController = Ember.Controller.extend({
       } else {
         this.toggleProperty('fadeContent');
       }
+
+      $(document).unbind('click');
+      $(document).click(function(e){
+        if ($(e.target).attr('id') !== 'menu-btn') {
+          if ($('#category-nav').hasClass('visible-categories')) {
+            self.set('visibleCategories', false);
+          }
+        }
+      });
     },
     hideCategories: function(){
       this.toggleProperty('visibleCategories');
@@ -630,6 +652,12 @@ var ArtworkPreviewBoxView = Ember.View.extend({
                 fs_slider_el.animate({'left': left}, 300);
               }
             });
+
+            $(document).keyup(function(e) {
+              if (e.keyCode == 27) $('#fs-close-btn').trigger('click');  // esc
+              if (e.keyCode == 37) $('#fs-prev-btn').trigger('click');   // left
+              if (e.keyCode == 39) $('#fs-next-btn').trigger('click');   // right
+            });
           }
 
           if (index > 1) {
@@ -645,8 +673,10 @@ var ArtworkPreviewBoxView = Ember.View.extend({
       // -------------------------
                 
       } else if (type === 'video') {
+        var videoId = this.get('controller.model.video_id');
+        console.log(videoId);
         tmpl += '<div id="fs-video">';
-        tmpl +=   '<h1>Video</h1>';
+        tmpl +=   '<iframe src="//player.vimeo.com/video/'+videoId+'" width="640" height="480" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
         tmpl += '</div>';
 
         spinner.stop();
@@ -809,6 +839,8 @@ function scrollListRight(type){
     button_right_el.hide();
   }
 }
+
+
 
 
 
