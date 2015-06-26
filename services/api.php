@@ -54,6 +54,7 @@
 					'name' => $r['name_'.$lang],
 					'website' => $r['website'],
 					'biography' => $r['bio_'.$lang],
+					'bibliography' => $r['bibliography'.$lang],
 					'aboutartist' => $r['aboutartist_'.$lang],
 					'path' => 'avatars/'.$r['artist_id'].'.jpg'
 				);
@@ -250,7 +251,8 @@
 			$texts[] = array(
 				'id' => intval($r['text_id']),
 				'author' => $r['author_'.$lang],
-				'title' => $r['title_'.$lang]
+				'title' => $r['title_'.$lang],
+				'category' => $r['text_cat_id']
 			);
 		}
 		/* -> return */
