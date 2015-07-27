@@ -356,7 +356,7 @@
 				/* Dump total results */
 				$result_full['category_info'] = $kategorija;
 				$result_full['artists'] = $umetnici;
-				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+				echo json_encode($result_full);
 
 		}else{
 			echo 'Kategorija nije zadata!';
@@ -413,7 +413,7 @@
 				/* Dump total results */
 				$result_full['category_info'] = $kategorija;
 				$result_full['artworks'] = $umdela;
-				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+				echo json_encode($result_full);
 
 		}else{
 			echo 'Kategorija nije zadata!';
