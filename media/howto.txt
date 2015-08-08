@@ -10,7 +10,6 @@ Standardi
 	+ avatar za svakog umetnika je jpeg 200x200 px
 	+ thumbnail za svako delo je jpeg 250x250 px
 	+ img za delo je jpeg, koji u punoj rezoluciji iznosi 1200 px po dužoj stranici
-	+ format video materijala je:
 	+ format teksta je html ili pdf, ukoliko html nije moguć
 
 

@@ -54,6 +54,7 @@
 					'name' => $r['name_'.$lang],
 					'website' => $r['website'],
 					'biography' => $r['bio_'.$lang],
+					'bibliography' => $r['bibliography'.$lang],
 					'aboutartist' => $r['aboutartist_'.$lang],
 					'path' => 'avatars/'.$r['artist_id'].'.jpg'
 				);
@@ -250,7 +251,8 @@
 			$texts[] = array(
 				'id' => intval($r['text_id']),
 				'author' => $r['author_'.$lang],
-				'title' => $r['title_'.$lang]
+				'title' => $r['title_'.$lang],
+				'category' => $r['text_cat_id']
 			);
 		}
 		/* -> return */
@@ -354,7 +356,7 @@
 				/* Dump total results */
 				$result_full['category_info'] = $kategorija;
 				$result_full['artists'] = $umetnici;
-				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+				echo json_encode($result_full);
 
 		}else{
 			echo 'Kategorija nije zadata!';
@@ -411,7 +413,7 @@
 				/* Dump total results */
 				$result_full['category_info'] = $kategorija;
 				$result_full['artworks'] = $umdela;
-				echo json_encode($result_full, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+				echo json_encode($result_full);
 
 		}else{
 			echo 'Kategorija nije zadata!';
