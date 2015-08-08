@@ -6,6 +6,6 @@
 6.  Category view - getArtists(), getArtworks()
 7.  Video view - vimeo integration
 8.  Show biography button - reflecting state
+9.  Categories menu - hidden on DOM clicked
 
-9.  Texts - categorization
-10. Categories menu - hidden on DOM clicked
+10. Texts - categorization ???
