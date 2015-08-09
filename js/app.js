@@ -152,6 +152,8 @@ App.TextsRoute = Ember.Route.extend({
         return collectionCategories;
       })();
 
+      texts.push({id:0, label: I18n.t('other')});
+
       texts.forEach(function(cat){
         cat.relatedTexts = []; 
       });
@@ -159,14 +161,16 @@ App.TextsRoute = Ember.Route.extend({
       data.forEach(function(text){
         var text_category_id = parseInt(text.category);
 
-        texts.forEach(function(cat, index){
-          if (cat.id === text_category_id) {
-            texts[index].relatedTexts.push(text);
-          }
-        });
-      });
+        if (text_category_id) {
+          var cat_index = texts.map(function(el) {
+            return el.id;
+          }).indexOf(text_category_id);
 
-      console.log(texts);
+          texts[cat_index].relatedTexts.push(text);          
+        } else {
+          texts[texts.length-1].relatedTexts.push(text);
+        }
+      });
 
       return texts;
     });
@@ -238,10 +242,16 @@ App.ApplicationController = Ember.Controller.extend({
         if ($(e.target).attr('id') !== 'search-btn' && $(e.target).attr('id') !== 'search-input') {
           if ($('#search-box').hasClass('visible-search')) {
             self.set('visibleSearch', false);
+            self.set('fadeContent', false);
           }
         }
       });
-      $('#search-input').focus();     
+
+      if (this.get('visibleSearch')) {
+        setTimeout(function(){
+          $('#search-input').focus();          
+        }, 500);
+      }
     },
     showHideCategories: function(){
       var self = this;
@@ -255,10 +265,11 @@ App.ApplicationController = Ember.Controller.extend({
 
       $(document).unbind('click');
       $(document).click(function(e){
-        if ($(e.target).attr('id') !== 'menu-btn') {
+        if ($(e.target).attr('id') !== 'menu-btn' && $(e.target).attr('id') !== 'search-btn') {
           if ($('#category-nav').hasClass('visible-categories')) {
             self.set('visibleCategories', false);
-          }
+            self.set('fadeContent', false);
+          }          
         }
       });
     },
@@ -489,9 +500,10 @@ App.TextsController = Ember.Controller.extend({
   showHideTexts: function(param){
     var el = $('.text-cat#'+param);
     el.toggleClass('texts-expanded');
-
   }
 });
+
+
 
 
 // --------------------------------------------------------
@@ -500,6 +512,7 @@ App.TextsController = Ember.Controller.extend({
 
 var SearchBoxView = Ember.View.extend({
   templateName: 'search-box',
+  
   keyUp: function() {
     var self = this;
     var query = this.get('controller.searchValue');

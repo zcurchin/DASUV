@@ -108,7 +108,7 @@ body.index.bg-3 {
 
 #logo-text {
 	font-size: 11px;
-	width: 150px;
+	width: 155px;
 	position: absolute;
 	right: -170px;
 	display: none;
@@ -146,12 +146,12 @@ body.index.bg-3 {
 	text-decoration: none;
 	font-weight: bold;
 	padding: 7px 30px;
-	color: #444;
+	color: #666;
 	display: block;
 }
 
 #main-nav-links li a:visited {
-	color: #444;
+	color: #666;
 }
 
 #main-nav-links li a:hover,
@@ -646,6 +646,7 @@ body.index.bg-3 {
   line-height: 32px;
 	max-width: 650px;
 	padding-bottom: 150px;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 
