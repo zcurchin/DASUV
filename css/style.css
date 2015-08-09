@@ -627,15 +627,17 @@ body.index.bg-3 {
 */
 
 .text-title {
-	font-size: 42px;
+	font-size: 51px;
+	font-family: "Open Sans", sans-serif;
 	font-weight: normal;
 	color: #333;
-	margin: 130px 0 5px;
+	margin: 130px 0 20px;
 }
 
 .text-author {
-	margin: 0 0 50px;
+	margin: 0 0 85px;
 	color: #666;
+	max-width: 400px;
 }
 
 .text-body {
@@ -654,14 +656,59 @@ body.index.bg-3 {
 ---------------------------------------------
 */
 
+.all-texts {
+}
+
+.text-cat {
+	position: relative;
+	border-bottom: 1px solid #ddd;
+	    overflow: hidden;
+}
+}
+
+.text-cat:last-child {
+	border: none;
+}
+
+.text-cat-label {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+	font-size: 24px;
+  font-weight: 400;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.text-cat:hover {
+	background: #f5f5f5;
+	cursor: pointer;
+	color: #111;
+}
+
+.text-cat:hover .text-cat-label,
+.text-cat:hover .more-items {
+	color: #111;
+}
+
+.text-cat.texts-expanded .more-items.icon-plus:before {
+	content: "\e604";
+}
+
 .texts-list {
 	list-style: none;
-	margin: 90px 0;
+	margin: 0;
 	padding: 0;
-	max-width: 400px;
+	display: none;
 }
-.texts-list li:hover {
-	background: #f5f5f5;
+
+.text-cat .more-items {
+  right: 0;
+  font-size: 35px !important;
+  margin-top: 18px;
+}
+
+.text-cat.texts-expanded .texts-list {
+	display: block;
 }
 
 .texts-list a {
@@ -669,19 +716,25 @@ body.index.bg-3 {
 }
 
 .texts-list li {
-	border-bottom: 1px solid #EBEBEB;
-	padding: 20px;
+	border-bottom: 1px solid #e0e0e0 !important;
+	padding: 20px 40px;
 }
 
-.texts-list li:last-child {
-	border: none;
+.texts-list li:hover {
+	background: #fff;
 }
 
-.texts-list h1 {
-	font-size: 24px;
-	color: #333;
-	font-weight: normal;
-	margin: 0;
+
+.texts-list .text-list-title {
+  font-size: 19px;
+  color: #333;
+  margin: 0;
+  color: #444;
+  font-weight: bold;
+}
+
+.texts-list .text-list-author {
+	color: #888 !important;
 }
 
 .texts-list p {

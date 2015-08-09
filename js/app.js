@@ -2,17 +2,17 @@ App = Ember.Application.create();
 
 I18n.locale = 'sr';
 
-var langString ='English';
+var langString = 'English';
 
 if(readCookie('lang') === 'en'){
   I18n.locale = 'en';
-  langString ='Srpski';
+  langString = 'Srpski';
 }
 
-bgIndex = 1;
-
 var baseURL = window.location.origin + window.location.pathname;
-
+var bgIndex = 1;
+var collectionCategories = [];
+var textsObject = null;
 
 
 // --------------------------------------------------------
@@ -69,6 +69,11 @@ App.ApplicationRoute = Ember.Route.extend({
       'method': 'getCategories',
       'lang': I18n.locale
     }).then(function(data) {      
+      data.forEach(function(category){
+        var cat = category;
+        cat.relatedTexts = [];
+        collectionCategories.push(cat);
+      });   
       return data;
     });
   }
@@ -143,8 +148,27 @@ App.TextsRoute = Ember.Route.extend({
       'method': 'getTexts',
       'lang': I18n.locale
     }).then(function(data) {
-    console.log(data);      
-      return data;
+      var texts = (function(){
+        return collectionCategories;
+      })();
+
+      texts.forEach(function(cat){
+        cat.relatedTexts = []; 
+      });
+      
+      data.forEach(function(text){
+        var text_category_id = parseInt(text.category);
+
+        texts.forEach(function(cat, index){
+          if (cat.id === text_category_id) {
+            texts[index].relatedTexts.push(text);
+          }
+        });
+      });
+
+      console.log(texts);
+
+      return texts;
     });
   }
 });
@@ -457,6 +481,15 @@ App.CategoryController = Ember.Controller.extend({
     scrollRight_artworks: function(){
       scrollListRight('artworks');
     }
+  }
+});
+
+
+App.TextsController = Ember.Controller.extend({
+  showHideTexts: function(param){
+    var el = $('.text-cat#'+param);
+    el.toggleClass('texts-expanded');
+
   }
 });
 

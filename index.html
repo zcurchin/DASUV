@@ -379,16 +379,24 @@
   ============================================
   -->
   <script type="text/x-handlebars" id="texts">
-    <ul class="texts-list">
-    {{#each text in model}}
-      {{#link-to 'text' text.id}}     
-        <li>
-          <h1>{{text.title}}</h1>
-          <p>{{text.author}}</p>
-        </li>
-      {{/link-to}}
+    <div class="all-texts">
+    {{#each text-cat in model}}
+      <div class="text-cat" {{bind-attr id="text-cat.id"}} {{action 'showHideTexts' text-cat.id}}>
+        <span class="more-items icon-plus"></span>
+        <h1 class="text-cat-label">{{text-cat.label}}</h1>
+        <ul class="texts-list">
+        {{#each text in text-cat.relatedTexts}}
+          {{#link-to 'text' text.id}}     
+            <li>
+              <p class="text-list-title">{{text.title}}</p>
+              <p class="text-list-author">{{text.author}}</p>
+            </li>
+          {{/link-to}}
+        {{/each}}
+        </ul>
+      </div>
     {{/each}}
-    </ul>
+    </div>
   </script>
 
 
