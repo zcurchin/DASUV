@@ -146,12 +146,14 @@ body.index.bg-3 {
 	text-decoration: none;
 	font-weight: bold;
 	padding: 7px 30px;
-	color: #666;
+	color: #999;
 	display: block;
+	outline: none;
+	font-size: 15px;
 }
 
 #main-nav-links li a:visited {
-	color: #666;
+	color: #999;
 }
 
 #main-nav-links li a:hover,
@@ -468,16 +470,16 @@ body.index.bg-3 {
 	font-weight: bold;
 	color: #333;
 	line-height: 32px;
-	margin-bottom: 10px;
 	margin-top: 10px;
+	margin-bottom: 5px;
 }
 
 .artist-cat-link {
 	text-decoration: none;
-	color: #555;
-	font-size: 15px;
+	color: #4A91CC;
+	font-size: 18px;
 	display: block;
-	margin-bottom: 15px;	
+	margin-bottom: 20px;	
 }
 
 .artist-cat-link .arrow {
@@ -485,7 +487,7 @@ body.index.bg-3 {
 }
 
 .artist-cat-link:hover {
-	color: #222;
+	color: #0F638B;
 }
 
 .link {
@@ -496,6 +498,7 @@ body.index.bg-3 {
 
 .link:hover {
 	color: #0F638B;
+	cursor: pointer;
 }
 
 .sep {
@@ -510,13 +513,9 @@ body.index.bg-3 {
 }
 
 .extra-info .icon-plus.visible-bio:before,
-.extra-info .icon-plus.visible-bib:before {
-  content: "\e604";
-  font-size: 50px;
-  display: inline-block;
-  margin-bottom: 20px;
-  position: relative;
-  top: 13px;
+.extra-info .icon-plus.visible-bib:before,
+.extra-info .icon-plus.visible-about:before {
+  content: "\e606";
 }
 
 .extra-info:hover {
@@ -525,7 +524,8 @@ body.index.bg-3 {
 }
 
 .biography,
-.bibliography {
+.bibliography,
+.about-artist {
 	line-height: 24px;
 	color: #555;
 	padding-right: 60px;
@@ -536,8 +536,14 @@ body.index.bg-3 {
 	line-height: 30px;
 }
 
+.extra-info-label {
+	font-size: 20px;
+	color: #333;
+}
+
 .biography.visible-bio,
-.bibliography.visible-bib {
+.bibliography.visible-bib,
+.about-artist.visible-about {
 	display: block;
 }
 
@@ -626,18 +632,27 @@ body.index.bg-3 {
 ---------------------------------------------
 */
 
+.text-title,
+.text-author,
+.text-body {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+
 .text-title {
 	font-size: 51px;
-	font-family: "Open Sans", sans-serif;
 	font-weight: normal;
 	color: #333;
-	margin: 130px 0 20px;
+	margin: 130px 0 40px;
+	max-width: 600px;
+  line-height: 60px;
 }
 
 .text-author {
 	margin: 0 0 85px;
 	color: #666;
 	max-width: 400px;
+	font-size: 20px;
 }
 
 .text-body {
@@ -646,7 +661,6 @@ body.index.bg-3 {
   line-height: 32px;
 	max-width: 650px;
 	padding-bottom: 150px;
-	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 
@@ -658,17 +672,14 @@ body.index.bg-3 {
 */
 
 .all-texts {
+	max-width: 600px;
+	padding-bottom: 200px;
 }
 
 .text-cat {
 	position: relative;
-	border-bottom: 1px solid #ddd;
-	    overflow: hidden;
-}
-}
-
-.text-cat:last-child {
-	border: none;
+	border-bottom: 2px solid #ddd;
+	overflow: hidden;
 }
 
 .text-cat-label {
@@ -680,7 +691,7 @@ body.index.bg-3 {
   color: #333;
 }
 
-.text-cat:hover {
+.text-cat-label:hover {
 	background: #f5f5f5;
 	cursor: pointer;
 	color: #111;
@@ -692,7 +703,7 @@ body.index.bg-3 {
 }
 
 .text-cat.texts-expanded .more-items.icon-plus:before {
-	content: "\e604";
+	content: "\e606";
 }
 
 .texts-list {
@@ -714,23 +725,34 @@ body.index.bg-3 {
 
 .texts-list a {
 	text-decoration: none;
+	outline: none;
+}
+
+.text-list-icon {
+  font-size: 49px;
+  color: #c1c1c1;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  top: -5px;
 }
 
 .texts-list li {
-	border-bottom: 1px solid #e0e0e0 !important;
-	padding: 20px 40px;
+	border-top: 1px solid #ddd !important;
+	padding: 20px 25px;
 }
 
 .texts-list li:hover {
-	background: #fff;
+	background: #f5f5f5;
+	cursor: pointer;
 }
 
 
 .texts-list .text-list-title {
-  font-size: 19px;
-  color: #333;
+  font-size: 16px;
+  color: #222;
   margin: 0;
-  color: #444;
   font-weight: bold;
 }
 
@@ -811,8 +833,8 @@ body.index.bg-3 {
 .slider-ctrl {
 	position: relative;
 	width: 100%;
-	height: 50px;
-	margin-top: 15px;
+	height: 60px;
+	margin-top: 25px;
 }
 
 .slider-ctrl .counter {
@@ -841,7 +863,25 @@ body.index.bg-3 {
 }
 
 .arrow-btn.play {
-	padding: 5px 15px;
+	padding: 0px 15px 0px 1px;
+}
+
+.arrow-btn.document {
+	padding: 0px 15px 0px 1px;
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+.arrow-btn.play .icon-play,
+.arrow-btn.document .icon-document {
+	padding-right: 5px;
+	color: #777;
+	font-size: 36px;
+}
+
+.play-label {
+	position: relative;
+	top: -8px;
 }
 
 .arrow-btn:hover {
@@ -870,6 +910,7 @@ body.index.bg-3 {
 #artwork-details span {
 	padding: 10px;
 	display: inline-block;
+	color: #222;
 }
 
 #artwork-details a,
@@ -889,7 +930,8 @@ body.index.bg-3 {
 
 #artwork-details .art-label {
 	border-right: 1px solid #EBEBEB;
-	width: 110px;	
+	width: 110px;
+	color: #666;
 }
 
 
@@ -1082,34 +1124,40 @@ body.index.bg-3 {
 }
 
 .icon-plus:before {
-	content: "\e600";
+	content: "\e60b";
 }
 .icon-menu:before {
-	content: "\e601";
+	content: "\e609";
 }
 .icon-magnifyer:before {
-	content: "\e602";
-}
-.icon-magnifyer_close:before {
-	content: "\e603";	
-}
-.icon-ex:before {
-	content: "\e604";
-}
-.icon-category:before {
-	content: "\e605";
-}
-.icon-arr-up:before {
-	content: "\e606";
-}
-.icon-arr-right:before {
-	content: "\e607";
-}
-.icon-arr-left:before {
 	content: "\e608";
 }
+.icon-magnifyer_close:before {
+	content: "\e607";	
+}
+.icon-ex:before {
+	content: "\e606";
+}
+.icon-category:before {
+	content: "\e604";
+}
+.icon-arr-up:before {
+	content: "\e603";
+}
+.icon-arr-right:before {
+	content: "\e602";
+}
+.icon-arr-left:before {
+	content: "\e601";
+}
 .icon-arr-down:before {
-	content: "\e609";
+	content: "\e600";
+}
+.icon-document:before {
+	content: "\e605";
+}
+.icon-play:before {
+	content: "\e60a";
 }
 
 

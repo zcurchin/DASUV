@@ -108,14 +108,14 @@ App.ArtworkRoute = Ember.Route.extend({
 
       model.thumbs = [];     
 
-      if (model.files === 1 ||  model.files === 0){
+      if (model.files === 1 ||  model.files === 0 || model.media_type === 'text'){
         var img_obj = {};        
         img_obj.path = baseURL + 'media/'+ data.artwork.id +'/thumb.jpg';
         img_obj.index = 0;
         model.thumbs.push(img_obj);
       }
 
-      if (data.artwork.files > 1){
+      if (model.files > 1){
         for(var i=1; i <= model.files; i++){
           var img_obj = {};
           img_obj.path = baseURL + 'media/'+ data.artwork.id +'/t'+ i +'.jpg';
@@ -124,8 +124,7 @@ App.ArtworkRoute = Ember.Route.extend({
         }
       }
       console.log(model);
-      return model;
-      
+      return model;      
     });
   }
 });
@@ -136,7 +135,8 @@ App.ArtistRoute = Ember.Route.extend({
       'method': 'getArtist',
       'lang': I18n.locale,
       'artist_id': params.artist_id
-    }).then(function(data) {      
+    }).then(function(data) {
+      console.log(data);    
       return data;
     });
   }
@@ -152,7 +152,9 @@ App.TextsRoute = Ember.Route.extend({
         return collectionCategories;
       })();
 
-      texts.push({id:0, label: I18n.t('other')});
+      if (texts[texts.length-1].id !== 0) {
+        texts.push({id:0, label: I18n.t('other')});
+      }
 
       texts.forEach(function(cat){
         cat.relatedTexts = []; 
@@ -284,26 +286,56 @@ App.ApplicationController = Ember.Controller.extend({
 App.ArtistController = Ember.Controller.extend({
   visibleBio: false,
   visibleBib: false,
+  visibleAbout: false,
+  artist_website: function(){
+    var url = this.get('model.artist.website');
+    return url;
+  }.property('model.artist.website'),
   actions: {
     toggleBio: function(){
       this.toggleProperty('visibleBio');      
+
+      if(this.get('visibleAbout')){
+        this.toggleProperty('visibleAbout');
+      }
 
       if(this.get('visibleBib')){
         this.toggleProperty('visibleBib');
       }
     },
     toggleBib: function(){
-      this.toggleProperty('visibleBib');      
+      this.toggleProperty('visibleBib');
+
+      if(this.get('visibleAbout')){
+        this.toggleProperty('visibleAbout');
+      } 
 
       if(this.get('visibleBio')){
         this.toggleProperty('visibleBio');
       };
+    },
+    toggleAbout: function(){
+      this.toggleProperty('visibleAbout');      
+
+      if(this.get('visibleBio')){
+        this.toggleProperty('visibleBio');
+      };
+
+      if(this.get('visibleBib')){
+        this.toggleProperty('visibleBib');
+      }
     }
   }
 });
 
 
 App.ArtworkController = Ember.Controller.extend({
+  document_url: function() {
+    var id = this.get('model.id');
+    var url = baseURL + 'media/' + id + '/text.pdf';
+    return url;
+  }.property('model.id'),
+
   multiple_thumbs: function() {
     var thumbs = this.get('model.thumbs');
     if (thumbs.length > 1) {
@@ -321,6 +353,11 @@ App.ArtworkController = Ember.Controller.extend({
   video_type: function() {
     var type = this.get('model.media_type');
     if (type === 'video') { return true; } else { return false; }
+  }.property('model.media_type'),
+
+  text_type: function() {
+    var type = this.get('model.media_type');
+    if (type === 'text') { return true; } else { return false; }
   }.property('model.media_type'),
 
   sound_mp3: null,

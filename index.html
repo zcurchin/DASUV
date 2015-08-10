@@ -155,18 +155,34 @@
         <p class="artist-name">{{model.artist.name}}</p>
         {{#link-to 'category' model.artist.category_id class="artist-cat-link"}}        
           <span>{{model.artist.category_name}}</span>
-          <span class="arrow">&rarr;</span>
         {{/link-to}}
-        <a class="link" {{bind-attr href=model.artist.website}} target="blank">{{i18n website}}</a>
+        {{#if model.artist.website}} 
+          <a class="link" {{bind-attr href=artist_website}} target="blank">{{i18n website}}</a>
+        {{/if}}
         <p class="sep"></p>
         <p class="extra-info" {{action 'toggleBio'}}>{{i18n biography}}<span class="icon-plus" {{ bind-attr class=visibleBio}}></span></p>
-        <p class="extra-info" {{action 'toggleBib'}}>{{i18n bibliography}}<span class="icon-plus" {{ bind-attr class=visibleBib}}></span></p>        
+        
+        {{#if model.artist.bibliography}}          
+          <p class="extra-info" {{action 'toggleBib'}}>{{i18n bibliography}}<span class="icon-plus" {{ bind-attr class=visibleBib}}></span></p>
+        {{/if}}
+
+        <p class="extra-info" {{action 'toggleAbout'}}>{{i18n about_artist}}<span class="icon-plus" {{ bind-attr class=visibleAbout}}></span></p>    
       </div>
     </div>
-    <p class="biography" {{ bind-attr class=visibleBio}}>{{model.artist.biography}}</p>
-    <p class="bibliography" {{ bind-attr class=visibleBib}}>{{model.artist.biography}}</p>
+    <div class="biography" {{ bind-attr class=visibleBio}}>
+      <h2 class="extra-info-label">{{i18n biography}}</h2>
+      <p>{{model.artist.biography}}</p>
+      </div>
+    <div class="bibliography" {{ bind-attr class=visibleBib}}>
+      <h2 class="extra-info-label">{{i18n bibliography}}</h2>
+      <p>{{model.artist.bibliography}}</p>
+      </div>
+    <div class="about-artist" {{ bind-attr class=visibleAbout}}>
+      <h2 class="extra-info-label">{{i18n about_artist}}</h2>
+      <p>{{model.artist.aboutartist}}</p>
+    </div>
     <h2 class="label">{{i18n artworks}}</h2>
-    <ul class="clearfix">      
+    <ul class="clearfix">
       {{#each artwork in model.artworks}}
         <li class="artist-work">
         {{#link-to 'artwork' artwork.id}}
@@ -231,7 +247,10 @@
         </ul>
       </div>
       <div class="slider-ctrl">
-        <span class="arrow-btn play" {{action 'openFullScreen' model.media_type target=view}}>&vrtri; {{i18n play}}</span>
+        <span class="arrow-btn play" {{action 'openFullScreen' model.media_type target=view}}>
+          <span class="icon-play"></span>
+          <span class="play-label">{{i18n play_video}}</span>
+        </span>
       </div> 
     {{/if}}
 
@@ -248,13 +267,29 @@
         </ul>
       </div>
       <div class="slider-ctrl">
-        <span class="arrow-btn play" {{action 'openFullScreen' model.media_type target=view}}>&vrtri; {{i18n play}}</span>
+        <span class="arrow-btn play" {{action 'openFullScreen' model.media_type target=view}}>
+          <span class="icon-play"></span>
+          <span class="play-label">{{i18n play_audio}}</span>
+        </span>
       </div> 
     {{/if}}
 
     {{#if text_type}}
+      <div class="slider-wrapper">
+        {{#each thumb in model.thumbs}}
+          <img class="artwork_thumb"
+          {{bind-attr src=thumb.path}}>
+        {{/each}}
+      </div>
+      <div class="slider-ctrl">
+        <a {{bind-attr href=document_url}} target="_blank">
+          <span class="arrow-btn document">
+            <span class="icon-document"></span>
+            <span class="play-label">{{i18n read_pdf}}</span>
+          </span>
+        </a>
+      </div> 
     {{/if}}
-
   </script>
   
   <script type="text/x-handlebars" id="artwork">
@@ -381,13 +416,14 @@
   <script type="text/x-handlebars" id="texts">
     <div class="all-texts">
     {{#each text-cat in model}}
-      <div class="text-cat" {{bind-attr id="text-cat.id"}} {{action 'showHideTexts' text-cat.id}}>
+      <div class="text-cat" {{bind-attr id="text-cat.id"}}>
         <span class="more-items icon-plus"></span>
-        <h1 class="text-cat-label">{{text-cat.label}}</h1>
+        <h1 class="text-cat-label" {{action 'showHideTexts' text-cat.id}}>{{text-cat.label}}</h1>
         <ul class="texts-list">
         {{#each text in text-cat.relatedTexts}}
           {{#link-to 'text' text.id}}     
             <li>
+              <span class="icon-document text-list-icon"></span>
               <p class="text-list-title">{{text.title}}</p>
               <p class="text-list-author">{{text.author}}</p>
             </li>
